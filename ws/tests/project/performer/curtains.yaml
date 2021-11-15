@@ -1,0 +1,64 @@
+- !Performer
+  name: "indoor blackout curtain triggers"
+  for appliance: "indoor blackout curtain"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_updown.Up
+      addresses: [0xA,]
+      events:
+        - !home.appliance.curtain.event.forced.Event.Opened
+    - !knx_plugin.trigger.dpt_updown.Down
+      addresses: [0xA,]
+      events:
+        - !home.appliance.curtain.event.forced.Event.Closed
+
+- !Performer
+  name: "indoor blackout curtain commands"
+  for appliance: "indoor blackout curtain"
+  commands:
+    - !knx_plugin.command.dpt_updown.Up {addresses: [0xA,]}
+  triggers: []
+
+
+- !Performer
+  name: "outdoor curtain triggers"
+  for appliance: "outdoor curtain"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_updown.Up
+      addresses: [0xB,]
+      events:
+        - !home.appliance.curtain.event.forced.Event.Opened
+    - !knx_plugin.trigger.dpt_updown.Down
+      addresses: [0xB,]
+      events:
+        - !home.appliance.curtain.event.forced.Event.Closed
+
+- !Performer
+  name: "outdoor curtain commands"
+  for appliance: "outdoor curtain"
+  commands:
+  - !knx_plugin.command.dpt_updown.UpDown {addresses: [0xB,]}
+  triggers: []
+
+
+- !Performer
+  name: "outdoor bedroom curtain triggers"
+  for appliance: "outdoor bedroom curtain"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_updown.Up
+      addresses: [0xB,]
+      events:
+        - !home.appliance.curtain.event.forced.Event.Opened
+    - !knx_plugin.trigger.dpt_updown.Down
+      addresses: [0xB,]
+      events:
+        - !home.appliance.curtain.event.forced.Event.Closed
+
+- !Performer
+  name: "outdoor bedroom curtain commands"
+  for appliance: "outdoor bedroom curtain"
+  commands:
+    - !knx_plugin.command.dpt_updown.UpDown {addresses: [0xB,]}
+  triggers: []

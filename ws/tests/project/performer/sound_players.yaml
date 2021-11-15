@@ -1,0 +1,43 @@
+- !Performer
+  name: "a sound player triggers"
+  for appliance: "a sound player"
+  commands: [ ]
+  triggers:
+    - !soco_plugin.trigger.play.Trigger
+      addresses: [ "sonos name" ]
+      events:
+        - !home.appliance.sound.player.event.forced.Event.On
+    - !soco_plugin.trigger.stop.Trigger
+      addresses: [ "sonos name" ]
+      events:
+        - !home.appliance.sound.player.event.forced.Event.Off
+    - !soco_plugin.trigger.pause.Trigger
+      addresses: [ "sonos name" ]
+      events:
+        - !home.appliance.sound.player.event.forced.Event.Off
+    - !soco_plugin.trigger.volume.Trigger { addresses: [ "Bagno" ] }
+
+- !Performer
+  name: "a sound player commands"
+  for appliance: "a sound player"
+  commands:
+    - !soco_plugin.command.pause.Command { addresses: [ "sonos name" ] }
+    - !soco_plugin.command.playlist.Command { addresses: [ "sonos name" ] }
+    - !soco_plugin.command.volume.absolute.Command { addresses: [ "sonos name" ] }
+    - !soco_plugin.command.mode.Command { addresses: [ "sonos name" ], fields: { "mode": "SHUFFLE" } }
+    - !soco_plugin.command.play.Command { addresses: [ "sonos name" ] }
+  triggers: [ ]
+
+- !Performer
+  name: "next user button for a sound player"
+  for appliance: "a sound player"
+  triggers:
+    - !knx_plugin.trigger.dpt_updown.Up { addresses: [ 0x0C0A ] }
+  commands: [ ]
+
+- !Performer
+  name: "previous user button for a sound player"
+  for appliance: "a sound player"
+  triggers:
+    - !knx_plugin.trigger.dpt_updown.Down { addresses: [ 0x0C0A ] }
+  commands: []

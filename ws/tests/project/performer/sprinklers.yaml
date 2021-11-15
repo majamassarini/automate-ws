@@ -1,0 +1,42 @@
+- !Performer
+  name: "sprinkler for grass trigger"
+  for appliance: "sprinkler for grass"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xAAAA ]
+      events:
+        - !home.appliance.sprinkler.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xAAAA ]
+      events:
+        - !home.appliance.sprinkler.event.forced.Event.Off
+
+- !Performer
+  name: "sprinkler for grass command"
+  for appliance: "sprinkler for grass"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff { addresses: [ 0xAAAA ] }
+  triggers: [ ]
+
+
+- !Performer
+  name: "sprinkler for flowers trigger"
+  for appliance: "sprinkler for flowers"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xBBBB ]
+      events:
+        - !home.appliance.sprinkler.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xBBBB ]
+      events:
+        - !home.appliance.sprinkler.event.forced.Event.Off
+
+- !Performer
+  name: "sprinkler for grass command"
+  for appliance: "sprinkler for flowers"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff { addresses: [ 0xBBBB ] }
+  triggers: [ ]

@@ -1,0 +1,32 @@
+- !Performer
+  name: "motion detected trigger"
+  for appliance: "a motion sensor"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xA11, ]
+      events:
+        - !home.event.motion.Event.Spotted
+
+- !Performer
+  name: "no motion trigger"
+  for appliance: "a motion sensor"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xA11, ]
+      events:
+        - !home.event.motion.Event.Missed
+
+
+- !Performer
+  name: "power sensor triggers"
+  for appliance: "a power sensor"
+  commands: []
+  triggers:
+  - !knx_plugin.trigger.dpt_value_power.Always {addresses: [0x210F,]}
+  - !knx_plugin.trigger.dpt_value_power.consumption.No {addresses: [0x210F,]}
+  - !knx_plugin.trigger.dpt_value_power.consumption.Low {addresses: [0x210F,]}
+  - !knx_plugin.trigger.dpt_value_power.consumption.High {addresses: [0x210F,]}
+  - !knx_plugin.trigger.dpt_value_power.consumption.Overhead {addresses: [0x210F,]}
+  - !knx_plugin.trigger.dpt_value_power.production.No {addresses: [0x210F,]}

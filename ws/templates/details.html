@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <title>{{ appliance.name }} details</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/homino.js"></script>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="{{ collection_url }}">{{ collection }}</a></li>
+                <li><a href="{{ appliance_url }}">{{ appliance.name }}</a></li>
+                <li class="is-active"><a>details</a></li>
+            </ul>
+        </nav>
+
+        <h1 class="title">{{ appliance.name }}</h1>
+
+
+        {% if user.configure %}
+        <div class="tile is-ancestor is-vertical mt-6">
+            <div class="tile is-child box">
+                <p>It belongs to the following <b>Performers</b></p>
+                <div class="content">
+                    <ul>
+                        {% for performer in performers %}
+                            <li>{{ performer }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tile is-child box">
+                <p>It belongs to the following <b>Group of Performers</b></p>
+                <div class="content">
+                    <ul>
+                        {% for group in group_of_performers %}
+                            <li>{{ group }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tile is-child box">
+                <p>It will be modified by the following <b>Scheduler Triggers</b></p>
+                <div class="content">
+                    <ul>
+                        {% for scheduler in scheduler_triggers %}
+                            <li>{{ scheduler }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    </div>
+</section>
+</body>
+</html>

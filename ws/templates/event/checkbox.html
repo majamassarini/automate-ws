@@ -1,0 +1,65 @@
+<div class="modal" id="modal-{{ bean.id_enabled }}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Actions on events: <br/><em>{{ bean.label }}</em></p>
+            <button onclick='$("#modal-{{ bean.id_enabled }}").removeClass("is-active")'
+                    class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+
+            <div>
+                Events of type <b>{{ bean.label }}</b>
+                <div>
+                    <label class="checkbox">
+                        Enable processing for <b>{{ appliance.name }}</b>:
+                        <input name="value" id="{{ bean.id_enabled }}" class="double ml-2" type="checkbox"
+                                {% if bean.enabled %} checked {% endif %}
+                               onchange="ajaxPostValue('{{ enable_event_url }}',
+                                       '{{ bean.module }}', '{{ bean.klass }}',
+                                       $('#{{ bean.id_enabled }}').prop('checked'))">
+                    </label>
+                </div>
+                <div class="mt-4">
+                    <button class="button is-info"
+                            onclick="ajaxPostValue('{{ apply_to_others_url }}',
+                                    '{{ bean.module }}', '{{ bean.klass }}',
+                                    $('#{{ bean.id_enabled }}').prop('checked'));
+                                    $('#modal-{{ bean.id_enabled }}').removeClass('is-active')">
+                        Apply to all similar appliances
+                    </button>
+                </div>
+                <div class="mt-4">
+                    <button class="button is-info"
+                            onclick="ajaxPostValue('{{ apply_to_collection_url }}',
+                                    '{{ bean.module }}', '{{ bean.klass }}',
+                                    $('#{{ bean.id_enabled }}').prop('checked'));
+                                    $('#modal-{{ bean.id_enabled }}').removeClass('is-active')">
+                        Apply to similar appliances in the same collection
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="mt-4">
+                Event <b>{{ bean.label }}: {{ bean.value }}</b>
+                <div class="mt-4">
+                    <button class="button is-info"
+                            onclick="ajaxPostSimple('{{ send_to_others_url }}',
+                                    '{{ bean.module }}', '{{ bean.klass }}');
+                                    $('#modal-{{ bean.id_enabled }}').removeClass('is-active')">
+                        Send to all similar appliances
+                    </button>
+                </div>
+                <div class="mt-4">
+                    <button class="button is-info"
+                            onclick="ajaxPostSimple('{{ send_to_collection_url }}',
+                                    '{{ bean.module }}', '{{ bean.klass }}');
+                                    $('#modal-{{ bean.id_enabled }}').removeClass('is-active')">
+                        Send to similar appliances in the same collection
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

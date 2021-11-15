@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <title>{{ appliance.name }} graphs</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/homino.js"></script>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="{{ collection_url }}">{{ collection }}</a></li>
+                <li><a href="{{ appliance_uri }}">{{ appliance.name }}</a></li>
+                <li class="is-active"><a>graphs</a></li>
+            </ul>
+        </nav>
+
+        <h1 class="title">{{ appliance.name }}</h1>
+
+        <div class="tile is-ancestor is-vertical mt-6">
+            <div class="tile is-parent is-vertical">
+            {% for url_batched in graph_urls|batch(1) %}
+                {% set external_loop = loop %}
+                <div class="tile is-parent box">
+                    {% for url in url_batched %}
+                        <div class="tile is-centered is-child is-12">
+                        <a onclick='$("#modal-{{ external_loop.index }}").addClass("is-active")'>
+                            <figure class="image is-12by1">
+                                <img src="{{ url }}">
+                            </figure>
+                        </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+
+            <form class="tile is-parent box" action="{{ graphs_url }}" method="POST" id="form-update-graph">
+                <div class="tile is-child is-small">
+                    <label>From: </label>
+                </div>
+                <div class="tile is-child is-small">
+                    <input class="input is-info is-small" type="number" name="from-number" id="from-number" value="{{ from_number }}"/>
+                </div>
+                <div class="select is-info tile is-child is-small">
+                    <select name="from-unit" id="from-unit" form="form-update-graph">
+                        {% for choice, choice_string in  units.items() %}
+                            <option value="{{ choice }}"
+                                    {% if choice == selected_unit %} selected {% endif %}>{{ choice_string }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="tile is-child is-small">
+                    <input class="button is-info is-small" type="submit" value="update">
+                </div>
+            </form>
+        </div>
+
+{% for url_batched in graph_urls_modal|batch(1) %}
+    {% set external_loop = loop %}
+    {% for url in url_batched %}
+        <div class="modal" id="modal-{{ external_loop.index }}" onclick='$("#modal-{{ external_loop.index }}").removeClass("is-active")'>
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <figure class="image is-4by3">
+                    <img src="{{ url }}">
+                </figure>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+    </div>
+</section>
+</body>
+</html>
+

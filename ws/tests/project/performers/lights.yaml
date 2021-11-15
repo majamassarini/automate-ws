@@ -1,0 +1,6 @@
+lights:
+  - zone light
+  - simple light
+  - presence light
+  - hue light
+  - dimmerable light

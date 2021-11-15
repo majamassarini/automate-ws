@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <title>{{ appliance.name }} history</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/homino.js"></script>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="{{ collection_url }}">{{ collection }}</a></li>
+                <li><a href="{{ appliance_uri }}">{{ appliance.name }}</a></li>
+                <li class="is-active"><a>history</a></li>
+            </ul>
+        </nav>
+
+        <h1 class="title">{{ appliance.name }}</h1>
+
+        <div class="tile is-ancestor is-vertical mt-6">
+            <form class="tile is-parent box" action="{{ history_url }}" method="POST" id="form-update-history">
+                <div class="tile is-child is-small">
+                    <label class="has-text-info is-small">Number of events: </label>
+                </div>
+                <div class="tile is-child is-small">
+                    <input class="input is-info is-small" type="number" name="num-of-events" id="num-of-events" value="10"/>
+                </div>
+                <div class="tile is-child is-small">
+                    <input class="button is-info is-small" type="submit" value="update">
+                </div>
+            </form>
+
+
+            {% for (timestamp, old_appliance, old_appliance_bean, event_details) in history %}
+                <div class="tile is-parent box">
+                    <div class="tile is-child">
+                        <p>{{ timestamp }}</p>
+                    </div>
+                    <div class="tile is-child">
+                        <b>
+                            <span class="icon has-text-dark mr-2">
+                                <i id="{{ old_appliance_bean.id_icon }}" class="{{ old_appliance_bean.icon }}"></i>
+                            </span>
+                            <label id="{{ old_appliance_bean.id_label }}">{{ old_appliance_bean.label }}</label>
+                        </b>
+                    </div>
+                    <div class="tile is-child">
+                        <ul class="events">
+                            {% for event, icon in event_details %}
+                                {% if event or icon %}
+                                <li>
+                                    <span class="icon has-text-info">
+                                    <i class="{{ icon }}"></i>
+                                </span>
+                                <span>{{ event }}</span>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+</body>
+</html>
+

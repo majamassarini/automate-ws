@@ -1,0 +1,68 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="/static/icon_128x128_blu.png" width="32" height="32">
+        </a>
+
+        <a role="button" id="burger-button"
+           onclick='$("#burger-button").toggleClass("is-active");$("#home-navbar").toggleClass("is-active")'
+           class="navbar-burger" aria-label="menu" aria-expanded="false"
+           data-target="home-navbar">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="home-navbar" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/index">
+            <span class="icon has-text-info">
+                <i class="fas fa-home"></i>
+            </span>
+                <span>Home</span>
+            </a>
+            <a class="navbar-item" href="/collections">
+                <span class="icon has-text-info">
+                <i class="fas fa-list"></i>
+            </span>
+                <span>Collections</span>
+            </a>
+            {% if user.configure %}
+            <!--a class="navbar-item" href="/editor">
+                <span class="icon has-text-info">
+                <i class="fas fa-edit"></i>
+            </span>
+                <span>Configurator</span>
+            </a-->
+            <a class="navbar-item" href="/logs">
+                <span class="icon has-text-info">
+                <i class="far fa-clipboard"></i>
+            </span>
+                <span>Logs</span>
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                {% if user %}
+                <div class="buttons">
+                    <label class="label is-info mr-3">{{ user.id }}</label>
+                    <form action="/logout" method="post">
+                        <input class="button is-light" type="submit" value="Logout">
+                    </form>
+                </div>
+                {% else %}
+                <div class="buttons">
+                    <a class="button is-light"
+                       onclick='$("#modal-login").toggleClass("is-active")'>
+                        Login
+                    </a>
+                </div>
+                {% endif %}
+                {% include "login.html" %}
+            </div>
+        </div>
+    </div>
+</nav>

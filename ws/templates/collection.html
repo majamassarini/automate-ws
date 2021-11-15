@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <title>{{ collection }}</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/homino.js"></script>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="/collections">Collections</a></li>
+                <li class="is-active"><a>{{ collection }}</a></li>
+            </ul>
+        </nav>
+
+        <h1 class="title">{{ collection }}</h1>
+
+        <div class="tile is-ancestor is-vertical mt-6">
+            {% for appliance, bean, event_beans in appliances %}
+                <div class="tile is-parent box">
+                    <div class="tile is-child is-4">
+                        <a class="is-size-5" href="{{ appliances_urls[appliance.name] }}">{{ appliance.name }}</a>
+                    </div>
+                    <div class="tile is-child is-2">
+                        <p class="title is-6" id="{{ bean.id }}">
+                            <label id="{{ bean.id_label }}">{{ bean.label }}</label>
+                            <span class="icon has-text-dark ml-2">
+                                <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="tile is-child">
+                        {% for bean in event_beans %}
+                            {%  if bean.enabled %}
+                                <span class="icon has-text-info">
+                                    <i class="{{ bean.icon }}"></i>
+                                </span>
+                            {% else %}
+                                <span class="icon has-text-dark">
+                                    <i class="{{ bean.icon }}"></i>
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+    </div>
+</section>
+</body>
+</html>

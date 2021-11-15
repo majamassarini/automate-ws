@@ -1,0 +1,109 @@
+!Appliances
+Curtains:
+  - !curtain.outdoor.Appliance { name: "outdoor curtain", events: [ ] }
+  - !curtain.outdoor.Appliance
+    name: "outdoor curtain in forced closed"
+    events:
+      - !home.appliance.curtain.event.forced.Event.Closed
+  - !curtain.outdoor.bedroom.Appliance { name: "outdoor bedroom curtain", events: [ ] }
+  - !curtain.indoor.blackout.Appliance { name: "indoor blackout curtain", events: [ ] }
+Thermostats:
+  - !thermostat.presence.Appliance { name: "a thermostat", events: [ ] }
+Energy control sockets:
+  - !socket.energy_guard.Appliance
+    name: "a energy control socket"
+    events:
+      - !home.event.enable.Event.On
+Sockets:
+  - !socket.presence.christmas.Appliance { name: "christmas socket", events: [ ] }
+  - !socket.presence.Appliance
+    name: "presence socket"
+    events_disabled:
+      - !home.event.presence.Event.On
+Lights:
+  - !light.zone.Appliance { name: "zone light", events: [ ] }
+  - !light.presence.Appliance { name: "presence light", events: [ ] }
+  - !light.Appliance { name: "simple light", events: [ ] }
+  - !light.indoor.hue.Appliance { name: "hue light", events: [ ] }
+  - !light.indoor.hue.Appliance
+    name: "hue light in circadian rhythm"
+    events:
+      - !home.appliance.light.indoor.dimmerable.event.forced.Event.CircadianRhythm
+  - !light.indoor.hue.Appliance
+    name: "hue light in lux balance"
+    events:
+      - !home.appliance.light.indoor.dimmerable.event.forced.Event.LuxBalance
+  - !light.indoor.hue.Appliance
+    name: "hue light in show"
+    events:
+      - !home.appliance.light.indoor.dimmerable.event.forced.Event.Show
+  - !light.indoor.dimmerable.Appliance { name: "dimmerable light", events: [ ] }
+  - !light.indoor.dimmerable.Appliance
+    name: "dimmerable light in circadian rhythm"
+    events:
+      - !home.appliance.light.indoor.dimmerable.event.forced.Event.CircadianRhythm
+  - !light.indoor.dimmerable.Appliance
+    name: "dimmerable light in lux balance "
+    events:
+      - !home.appliance.light.indoor.dimmerable.event.forced.Event.LuxBalance
+Sensors:
+  - !sensor.motion.Appliance { name: "a motion sensor", events: [ ] }
+  - !sensor.powermeter.Appliance { name: "a power sensor", events: [ ] }
+Weather sensors:
+  - !sensor.anemometer.Appliance { name: "anemometer", events: [ ] }
+  - !sensor.luxmeter.Appliance { name: "luxmeter", events: [ ] }
+  - !sensor.rainmeter.Appliance { name: "rainmeter", events: [ ] }
+  - !sensor.thermometer.Appliance { name: "thermometer", events: [ ] }
+Sound Players:
+  - !sound.player.Appliance
+    name: "a sound player"
+    events:
+      - !sound.player.event.playlist.Event { value: "Common" }
+      - !sound.player.event.fade_in.volume.Event { value: 1 }
+      - !sound.player.event.fade_out.volume.Event { value: 20 }
+      - !sound.player.event.fade_in.playlist.Event { value: "Fade In" }
+      - !sound.player.event.fade_out.playlist.Event { value: "Fade Out" }
+  - !sound.player.Appliance
+    name: "a sound player in circadian rhythm"
+    events:
+      - !home.appliance.sound.player.event.forced.Event.CircadianRhythm
+      - !sound.player.event.playlist.Event { value: "Common" }
+      - !sound.player.event.fade_in.volume.Event { value: 1 }
+      - !sound.player.event.fade_out.volume.Event { value: 20 }
+      - !sound.player.event.fade_in.playlist.Event { value: "Fade In" }
+      - !sound.player.event.fade_out.playlist.Event { value: "Fade Out" }
+  - !sound.player.Appliance
+    name: "a sound player in forced on"
+    events:
+      - !home.appliance.sound.player.event.forced.Event.On
+      - !sound.player.event.playlist.Event { value: "Common" }
+      - !sound.player.event.fade_in.volume.Event { value: 1 }
+      - !sound.player.event.fade_out.volume.Event { value: 20 }
+      - !sound.player.event.fade_in.playlist.Event { value: "Fade In" }
+      - !sound.player.event.fade_out.playlist.Event { value: "Fade Out" }
+  - !sound.player.Appliance
+    name: "a sound player in fading in"
+    events:
+      - !home.event.sleepiness.Event.Awake
+      - !sound.player.event.playlist.Event { value: "Common" }
+      - !sound.player.event.fade_in.volume.Event { value: 1 }
+      - !sound.player.event.fade_out.volume.Event { value: 20 }
+      - !sound.player.event.fade_in.playlist.Event { value: "Fade In" }
+      - !sound.player.event.fade_out.playlist.Event { value: "Fade Out" }
+Alarms:
+  - !sensor.alarm.Appliance { name: "one zone alarm", events: [ ] }
+  - !sensor.alarm.Appliance { name: "another zone alarm", events: [ ] }
+Sprinklers:
+  - !sprinkler.Appliance
+    name: "sprinkler for grass"
+    events:
+      - !sprinkler.event.duration.Event {value: 300}
+      - !sprinkler.event.partially_on.duration.Event {value: 120}
+    events_disabled:
+      - !home.event.sun.phase.Event.Sunset
+  - !sprinkler.Appliance
+    name: "sprinkler for flowers"
+    events:
+      - !sprinkler.event.duration.Event {value: 1800}
+      - !sprinkler.event.partially_on.duration.Event {value: 900}
+

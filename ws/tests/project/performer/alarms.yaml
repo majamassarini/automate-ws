@@ -1,0 +1,56 @@
+- !Performer
+  name: "one zone alarm triggers (triggered)"
+  for appliance: "one zone alarm"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xAABB, ]
+      events:
+        - !home.event.alarm.triggered.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xAABB, ]
+      events:
+        - !home.event.alarm.triggered.Event.Off
+          -
+- !Performer
+  name: "one zone alarm triggers (alarmed)"
+  for appliance: "one zone alarm"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xAAAB, ]
+      events:
+        - !home.event.alarm.armed.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xAAAB, ]
+      events:
+        - !home.event.alarm.armed.Event.Off
+
+
+- !Performer
+  name: "another zone alarm triggers (triggered)"
+  for appliance: "another zone alarm"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xBBAA, ]
+      events:
+        - !home.event.alarm.triggered.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xBBAA, ]
+      events:
+        - !home.event.alarm.triggered.Event.Off
+          -
+- !Performer
+  name: "another zone alarm triggers (alarmed)"
+  for appliance: "another zone alarm"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xBAAA, ]
+      events:
+        - !home.event.alarm.armed.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xBAAA, ]
+      events:
+        - !home.event.alarm.armed.Event.Off

@@ -1,0 +1,13 @@
+- !sun.sunrise.Trigger
+  name: "sunrise"
+  notify more events: []
+  latitude: 46.201685
+  longitude: 13.209001
+  elevation: 280
+
+- !sun.sunset.Trigger
+  name: "sunset"
+  notify more events: []
+  latitude: 46.201685
+  longitude: 13.209001
+  elevation: 280

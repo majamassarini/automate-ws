@@ -1,0 +1,16 @@
+- !Performer
+  name: "thermostat triggers"
+  for appliance: "a thermostat"
+  commands: []
+  triggers:
+  - !knx_plugin.trigger.custom_clima.OnManuale {addresses: [0x0CCC,], events: [], low_setpoint: 14.0, high_setpoint: 17.0}
+  - !knx_plugin.trigger.custom_clima.OnAutomatico {addresses: [0x0CCC,], events: [], low_setpoint: 14.0, high_setpoint: 17.0}
+  - !knx_plugin.trigger.custom_clima.Off {addresses: [0x0CCC,], events: [], low_setpoint: 14.0, high_setpoint: 17.0}
+  - !knx_plugin.trigger.custom_clima.Keep {addresses: [0x0CCC,], events: [], low_setpoint: 14.0, high_setpoint: 17.0}
+  - !knx_plugin.trigger.custom_clima.Report {addresses: [0x0CCC,], events: [], low_setpoint: 14.0, high_setpoint: 17.0}
+
+- !Performer
+  name: "thermostat command"
+  for appliance: "a thermostat"
+  commands:
+    - !knx_plugin.command.custom_clima.Setup {addresses: [0x0CCC,], low_setpoint: 14, high_setpoint: 15}

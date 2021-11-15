@@ -1,0 +1,72 @@
+- !Performer
+  name: "presence socket triggers"
+  for appliance: "presence sockets"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xEE, ]
+      events:
+        - !home.appliance.socket.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xEE, ]
+      events:
+        - !home.appliance.socket.event.forced.Event.Off
+
+- !Performer
+  name: "presence socket commands"
+  for appliance: "presence sockets"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff {addresses: [0xEE,]}
+
+
+- !Performer
+  name: "christmas socket triggers"
+  for appliance: "christmas sockets"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xFF, ]
+      events:
+        - !home.appliance.socket.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xFF, ]
+      events:
+        - !home.appliance.socket.event.forced.Event.Off
+
+- !Performer
+  name: "christmas socket commands"
+  for appliance: "christmas sockets"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff {addresses: [0xFF,]}
+
+
+- !Performer
+  name: "energy control socket command (inverted)"
+  for appliance: "a energy control socket"
+  commands:
+    - !knx_plugin.command.dpt_switch.OffOn { addresses: [ 0x0EEE, ] }
+  triggers: [ ]
+
+- !Performer
+  name: "enable from a energy control socket trigger"
+  for appliance: "a energy control socket"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0x0EEE, ]
+      events:
+        - !home.event.enable.Event.On
+
+- !Performer
+  name: "energy control socket triggers"
+  for appliance: "a energy control socket"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0x0EEE, ]
+      events:
+        - !home.appliance.socket.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0x0EEE, ]
+      events:
+        - !home.appliance.socket.event.forced.Event.Off

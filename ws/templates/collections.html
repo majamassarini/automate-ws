@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+
+    <title>Collections of Appliances</title>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-active"><a>Collections</a></li>
+            </ul>
+        </nav>
+
+        <h1 class="title">Collections of Appliances</h1>
+
+        <div class="tile is-ancestor mt-6">
+        <div class="tile is-vertical is-parent">
+            {% for collection, appliance_beans in collections %}
+                <div class="tile box">
+                    <div class="tile is-child is-4">
+                        <a class="is-size-5" href="{{ collections_urls[collection] }}">{{ collection }}</a>
+                    </div>
+                    <div class="tile is-child">
+                        {% for bean in appliance_beans %}
+                            {% if bean.icon %}
+                            <span class="icon has-text-dark">
+                                <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+                            </span>
+                            {% else %}
+                                <span class="mr-2" id="{{ bean.id_label }}">{{ bean.label }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

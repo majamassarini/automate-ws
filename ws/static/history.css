@@ -1,0 +1,34 @@
+.time {
+  color: gray;
+}
+
+.state {
+}
+
+.events {
+  list-style-type: none;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% 20% auto;
+}
+
+.grid-item {
+}
+
+@media only screen and (max-device-width: 800px) {
+  .grid-container {
+    display: block-inline;
+    grid-template-columns: 33% 33% 33%;
+  }
+
+  .time {
+    font-size: xx-small;
+  }
+
+  .events {
+    font-size: x-small;
+  }
+}
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="/static/homino.css">
+
+    <title>{{ appliance.name }}</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/homino.js"></script>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="{{ collection_url }}">{{ collection }}</a></li>
+                <li class="is-active"><a>{{ appliance.name }}</a></li>
+                <li><a href="{{ graphs_url }}">graphs</a> <a href="{{ history_url }}">history</a> <a
+                        href="{{ details_url }}">details</a></li>
+            </ul>
+        </nav>
+
+        <h1 class="title">{{ appliance.name }} is <b id="{{ id }}">
+            <label class="ml-6" id="{{ bean.id_label }}">{{ bean.label }}</label>
+            <span class="icon has-text-dark ml-2">
+                <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+            </span>
+        </b>
+        </h1>
+
+        <div class="tile is-ancestor is-vertical mt-6">
+            {% for bean in event_beans %}
+
+                {% if bean.label %}
+                    <form class="tile is-parent box"
+                            {% if not bean.displayed %} style="display: none;" {% endif %}
+                          action="{{ appliance_url }}" method="POST"
+                          id="form-{{ bean.id }}">
+                        <input type="hidden" name="module" value="{{ bean.module }}">
+                        <input type="hidden" name="klass" value="{{ bean.klass }}">
+                        {% include templates_dir + "/" + bean.template %}
+                        {% if user.edit %}
+                        <div class="tile is-child is-1">
+                            <a onclick='$("#modal-{{ bean.id_enabled }}").addClass("is-active")'>
+                            <span class="icon has-text-info">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </form>
+                    {% include templates_dir + "/event/checkbox.html" %}
+                {% endif %}
+
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

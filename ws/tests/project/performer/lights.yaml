@@ -1,0 +1,137 @@
+- !Performer
+  name: "zone light triggers"
+  for appliance: "zone light"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xABCD, 0xABCE ]
+      events:
+        - !home.appliance.light.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xABCD, 0xABCE ]
+      events:
+        - !home.appliance.light.event.forced.Event.Off
+
+- !Performer
+  name: "zone light commands"
+  for appliance: "zone light"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff {addresses: [0xABCD,]}
+
+
+- !Performer
+  name: "simple light triggers"
+  for appliance: "simple light"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xAACD, 0xAACE ]
+      events:
+        - !home.appliance.light.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xAACD, 0xAACE ]
+      events:
+        - !home.appliance.light.event.forced.Event.Off
+
+- !Performer
+  name: "simple light commands"
+  for appliance: "simple light"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff {addresses: [0xAACD,]}
+
+
+- !Performer
+  name: "presence light triggers"
+  for appliance: "presence light"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0xBBCD, 0xBBCE ]
+      events:
+        - !home.appliance.light.event.forced.Event.On
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0xBBCD, 0xBBCE ]
+      events:
+        - !home.appliance.light.event.forced.Event.Off
+
+- !Performer
+  name: "presence light commands"
+  for appliance: "presence light"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff {addresses: [0xBBCD,]}
+
+
+- !Performer
+  name: "hue light trigger"
+  for appliance: "hue light"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0x0EEE, ]
+      events:
+        - !home.appliance.light.indoor.dimmerable.event.forced.Event.CircadianRhythm
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0x0EEE, ]
+      events:
+        - !home.appliance.light.indoor.dimmerable.event.forced.Event.Not
+
+- !Performer
+  name: "hue light lifx commands"
+  for appliance: "hue light"
+  commands:
+    - !lifx_plugin.command.SetColor {addresses: [["172.31.10.245", 56700]]}
+    - !lifx_plugin.command.SetWaveform {addresses: [["172.31.10.245", 56700]]}
+  triggers: []
+
+- !Performer
+  name: "hue light color command"
+  for appliance: "hue light"
+  commands:
+    - !lifx_plugin.command.SetColor {addresses: [["172.31.10.245", 56700]]}
+  triggers: []
+
+- !Performer
+  name: "hue light show command"
+  for appliance: "hue light"
+  commands:
+    - !lifx_plugin.command.SetWaveform {addresses: [["172.31.10.245", 56700]]}
+  triggers: []
+
+- !Performer
+  name: "hue light brightness adjust"
+  for appliance: "hue light"
+  commands:
+    - !lifx_plugin.command.SetColor {addresses: [["172.31.10.245", 56700]]}
+  triggers:
+    - !knx_plugin.trigger.dpt_control_dimming.BrightnessStep {addresses: [0x0C07]}
+
+
+- !Performer
+  name: "dimmerable light triggers"
+  for appliance: "dimmerable light"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0x0DDD, 0x0DD1, ]
+      events:
+        - !home.appliance.light.indoor.dimmerable.event.forced.Event.CircadianRhythm
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0x0DD2, ]
+      events:
+        - !home.appliance.light.indoor.dimmerable.event.forced.Event.LuxBalance
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0x0DDD, 0x0DD1, 0x0DD2, ]
+      events:
+        - !home.appliance.light.indoor.dimmerable.event.forced.Event.Off
+    - !knx_plugin.trigger.dpt_brightness.Always # let user control brightness
+      addresses: [ 0x0DD3, ]
+      events:
+        - !home.appliance.light.indoor.dimmerable.event.forced.Event.On
+
+- !Performer
+  name: "dimmerable light commands"
+  for appliance: "dimmerable light"
+  commands:
+    - !knx_plugin.command.dpt_switch.OnOff { addresses: [ 0x0DD1, ] }
+    - !knx_plugin.command.dpt_brightness.Brightness { addresses: [ 0x0DD3, ] }
+  triggers: [ ]

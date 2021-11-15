@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <script src="/static/blockly_compressed.js"></script>
+    <script src="/static/blocks_compressed.js"></script>
+    <script src="/static/javascript_compressed.js"></script>
+    <script src="/static/msg/js/en.js"></script>
+    <script src="/static/python_compressed.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script src="/static/homino.js"></script>
+
+    <script src="/static/block/event.js"></script>
+    <script src="/static/generator/event.js"></script>
+    <script src="/static/block/light_event.js"></script>
+    <script src="/static/generator/light_event.js"></script>
+    <script src="/static/block/appliance.js"></script>
+    <script src="/static/generator/appliance.js"></script>
+    <script src="/static/block/knx.js"></script>
+    <script src="/static/generator/knx.js"></script>
+    <script src="/static/block/scheduler.js"></script>
+    <script src="/static/generator/scheduler.js"></script>
+
+    <title>Configuration Editor</title>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        <div class="tile is-ancestor mt-6">
+            <div class="tile is-vertical is-parent">
+                <div class="tile is-child">
+                    <button class="button is-info" onclick="showCode('/editor', demoWorkspace)">Show configuration</button>
+                    <button class="button is-info" onclick="saveWorkspace('/editor', demoWorkspace)">Save workspace</button>
+                    <button class="button is-info" onclick="loadWorkspace('/editor', demoWorkspace)">Load workspace</button>
+                </div>
+                <div class="tile is-child">
+                    <div id="blocklyDiv" style="height: 600px; width: 1200px;"></div>
+                </div>
+                <div class="tile is-child">
+                    <div id="codeDiv" style="white-space: pre-wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="Events" colour="205">
+        <block type="event_int"></block>
+        <block type="event_float"></block>
+        <block type="event_string"></block>
+        <block type="home_event_alarm_armed_event"></block>
+        <block type="home_event_alarm_triggered_event"></block>
+        <block type="home_event_power_consumption_event"></block>
+        <block type="home_event_power_consumption_duration_event"></block>
+        <block type="home_event_power_production_event"></block>
+        <block type="home_event_power_production_duration_event"></block>
+        <block type="home_event_sun_brightness_event"></block>
+        <block type="home_event_sun_hit_event"></block>
+        <block type="home_event_sun_phase_event"></block>
+        <block type="home_event_wind_event"></block>
+        <block type="home_event_courtesy_event"></block>
+        <block type="home_event_enable_event"></block>
+        <block type="home_event_motion_event"></block>
+        <block type="home_event_presence_event"></block>
+        <block type="home_event_scene_event"></block>
+        <block type="home_event_show_event"></block>
+        <block type="home_event_sleepiness_event"></block>
+        <block type="home_event_waveform_event"></block>
+    </category>
+    <category name="Light Events" colour="205">
+        <block type="light_forced"></block>
+        <block type="light_brightness"></block>
+        <block type="light_saturation"></block>
+        <block type="light_temperature"></block>
+        <block type="light_hue"></block>
+        <block type="light_circadian_rhythm_brightness"></block>
+        <block type="light_circadian_rhythm_saturation"></block>
+        <block type="light_circadian_rhythm_temperature"></block>
+        <block type="light_circadian_rhythm_hue"></block>
+        <block type="light_lux_balancing_brightness"></block>
+        <block type="light_show_starting_brightness"></block>
+        <block type="light_show_ending_brightness"></block>
+        <block type="light_show_starting_hue"></block>
+        <block type="light_show_ending_hue"></block>
+        <block type="light_show_cycles"></block>
+        <block type="light_show_period"></block>
+    </category>
+    <category name="Scheduler Triggers" colour="205">
+        <block type="appliance_name"></block>
+        <block type="scheduler_trigger"></block>
+        <block type="scheduler_trigger_delay"></block>
+        <block type="scheduler_trigger_sunrise"></block>
+        <block type="scheduler_trigger_sunset"></block>
+        <block type="scheduler_trigger_sunhit"></block>
+        <block type="scheduler_trigger_sunleft"></block>
+        <block type="scheduler_trigger_cron"></block>
+    </category>
+    <category name="Appliance" colour="220">
+        <block type="protocol_triggers"></block>
+        <block type="protocol_commands"></block>
+        <block type="appliance_curtain_outdoor_curtain"></block>
+        <block type="appliance_socket_presence_socket"></block>
+        <block type="appliance_sensor_lux"></block>
+        <block type="appliance_sensor_alarm"></block>
+        <block type="appliance_sensor_anemometer"></block>
+    </category>
+    <category name="KNX" colour="275">
+        <block type="knx_free_address"></block>
+        <block type="knx_two_level_address"></block>
+        <block type="knx_three_level_address"></block>
+        <block type="knx_addresses"></block>
+    </category>
+    <category name="KNX triggers" colour="280">
+        <block type="knx_plugin_trigger_dpt_switch_on"></block>
+        <block type="knx_plugin_trigger_dpt_switch_off"></block>
+        <block type="knx_plugin_trigger_dpt_updown_opened"></block>
+        <block type="knx_plugin_trigger_dpt_updown_closed"></block>
+        <block type="knx_plugin_trigger_dpt_value_lux_always"></block>
+        <block type="knx_plugin_trigger_dpt_value_lux_dark"></block>
+        <block type="knx_plugin_trigger_dpt_value_lux_deepdark"></block>
+        <block type="knx_plugin_trigger_dpt_value_lux_bright"></block>
+        <block type="knx_plugin_trigger_dpt_value_wsp_always"></block>
+        <block type="knx_plugin_trigger_dpt_value_wsp_strong"></block>
+        <block type="knx_plugin_trigger_dpt_value_wsp_weak"></block>
+    </category>
+    <category name="KNX commands" colour="270">
+        <block type="knx_plugin_command_dpt_switch_onoff"></block>
+        <block type="knx_plugin_command_dpt_updown_updown"></block>
+        <block type="knx_plugin_command_dpt_updown_up"></block>
+    </category>
+</xml>
+
+<script>
+    var demoWorkspace = Blockly.inject('blocklyDiv',
+        {
+            toolbox: document.getElementById('toolbox'),
+            collapse: true,
+            comments: true,
+            disable: true,
+            maxBlocks: Infinity,
+            trashcan: true,
+            horizontalLayout: false,
+            toolboxPosition: 'start',
+            css: true,
+            media: '/static/media/',
+            rtl: false,
+            scrollbars: true,
+            sounds: true,
+            oneBasedIndex: true
+        });
+</script>
+
+</body>
+</html>

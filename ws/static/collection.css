@@ -1,0 +1,14 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% 20%;
+}
+
+.grid-item {
+}
+
+@media only screen and (max-device-width: 800px) {
+  .grid-container {
+    display: block-inline;
+    grid-template-columns: 60% auto;
+  }
+}

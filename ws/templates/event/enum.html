@@ -1,0 +1,20 @@
+{% include templates_dir + "/event/label.html" %}
+<div class="tile is-child pr-6">
+    <span class="icon has-text-info">
+        <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+    </span>
+{% if user.edit %}
+    <div class="select is-info">
+            <select name="value" id="{{ bean.id }}" form="form-{{ bean.id }}" {% if not bean.enabled %} disabled {% endif %}
+                    onchange="ajaxPostValue('{{ appliance_uri }}', '{{ bean.module }}', '{{ bean.klass }}', $('#{{ bean.id }} option:selected').val())">
+                {% for choice, label in bean.choices %}
+                    <option value="{{ choice.value }}"
+                            {% if label == bean.value %} selected {% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+    </div>
+{% else %}
+    {% include templates_dir + "/event/value_label.html" %}
+{% endif %}
+</div>
+

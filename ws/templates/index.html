@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/homino.js"></script>
+    <title>Last Events</title>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+
+        {% include "navbar.html" %}
+
+        {% for (appliance_url, old_appliance, old_appliance_bean, event_details, actual_events) in history %}
+            <div class="tile is-parent box mt-6">
+                <div class="tile is-child is-4">
+                    <b><a href="{{ appliance_url }}">{{ old_appliance.name }}</a></b>
+                </div>
+                <div class="tile is-child is-3">
+                    <b>
+                        <label id="{{ old_appliance_bean.id_label }}">{{ old_appliance_bean.label }}</label>
+                        <span class="icon has-text-dark mr-3">
+                            <i id="{{ old_appliance_bean.id_icon }}" class="{{ old_appliance_bean.icon }}"></i>
+                        </span>
+                    </b>
+                    <ul class="content is-small events mt-3">
+                        {% for icon, event in event_details %}
+                            {% if icon or event %}
+                                <li>
+                                    <span class="icon has-text-dark">
+                                    <i class="{{ icon }}"></i>
+                                    </span>
+                                    <span>{{ event }}</span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="tile is-child is-4">
+                        {% for event in actual_events %}
+                            {% if event.icon %}
+                                <span {% if not event.enabled %} class="icon has-text-dark"
+                                {% else %} class="icon has-text-info" {% endif %}>
+                                        <i class="{{ event.icon }}"></i>
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+</body>
+</html>

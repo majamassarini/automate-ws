@@ -1,0 +1,8 @@
+- !schedule
+  trigger: "sunrise"
+  for performers: "curtains"
+
+- !schedule
+  trigger: "sunset"
+  for performers: "curtains"
+

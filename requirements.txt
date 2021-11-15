@@ -1,0 +1,14 @@
+git+git://github.com/majamassarini/automate-home.git
+git+git://github.com/majamassarini/automate-home-assistant-plugin.git
+git+git://github.com/majamassarini/automate-knx-plugin.git
+git+git://github.com/majamassarini/automate-lifx-plugin.git
+git+git://github.com/majamassarini/automate-sonos-plugin.git
+git+git://github.com/majamassarini/automate-graphite-feeder.git
+aiohttp
+aiohttp-jinja2
+aiohttp-session
+aiohttp-security
+multidict
+jinja2
+colour
+PyYAML

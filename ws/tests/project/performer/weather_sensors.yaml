@@ -1,0 +1,56 @@
+- !Performer
+  name: "wind trigger (any value)"
+  for appliance: "anemometer"
+  commands: []
+  triggers:
+    - !home_assistant_plugin.service.sensor.float.trigger.Always {entity_id: "sensor.wind_sensor"}
+
+- !Performer
+  name: "strong wind trigger"
+  for appliance: "anemometer"
+  commands: []
+  triggers:
+    - !home_assistant_plugin.service.sensor.float.trigger.GreaterThan
+      entity_id: "sensor.wind_sensor"
+      events:
+        - !home.event.wind.Event.Strong
+      value: 3.0
+
+
+- !Performer
+  name: "sun brightness trigger"
+  for appliance: "luxmeter"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_value_lux.Always {addresses: [0x0A04]}
+
+
+- !Performer
+  name: "is raining trigger"
+  for appliance: "rainmeter"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.On
+      addresses: [ 0x0A01, ]
+      events:
+        - !home.event.rain.Event.Gentle
+
+- !Performer
+  name: "is not raining trigger"
+  for appliance: "rainmeter"
+  commands: []
+  triggers:
+    - !knx_plugin.trigger.dpt_switch.Off
+      addresses: [ 0x0A01, ]
+      events:
+        - !home.event.rain.Event.No
+
+
+- !Performer
+  name: "thermometer triggers"
+  for appliance: "thermometer"
+  commands: [ ]
+  triggers:
+    - !knx_plugin.trigger.dpt_value_temp.Always { addresses: [ 0x0A02 ] }
+    - !knx_plugin.trigger.dpt_value_temp.Cold { addresses: [ 0x0A02 ] }
+    - !knx_plugin.trigger.dpt_value_temp.Hot { addresses: [ 0x0A02 ] }
