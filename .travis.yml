@@ -1,5 +1,5 @@
 env:
-  - CODECOV_TOKEN='aaa'
+  - CODECOV_TOKEN='31ea7041-d944-48f0-bdd9-9e216747e95e'
 language: python
 python:
   - "3.8"
