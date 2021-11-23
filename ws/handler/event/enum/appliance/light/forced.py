@@ -12,7 +12,7 @@ class Handler(forced.Handler):
 
     def _get_str(self, e):
         if e == home.appliance.light.event.forced.event.Event.On:
-            return self.ON
+            return self.FORCED_ON
         elif e == home.appliance.light.event.forced.event.Event.Off:
             return self.OFF
         elif e == home.appliance.light.event.forced.event.Event.Not:

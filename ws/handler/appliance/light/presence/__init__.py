@@ -13,7 +13,7 @@ class Handler(Parent):
             appliance.state.VALUE
             == home.appliance.light.presence.state.forced.on.State.VALUE
         ):
-            return self.LABEL_ON
+            return self.LABEL_FORCED_ON
         else:
             return self.LABEL_OFF
 
@@ -22,6 +22,6 @@ class Handler(Parent):
             appliance.state.VALUE
             == home.appliance.light.presence.state.forced.on.State.VALUE
         ):
-            return self.ICON_ON
+            return self.ICON_FORCED_ON
         else:
             return self.ICON_OFF
