@@ -3,4 +3,4 @@
 
 ## automate-home web server
 
-The simplest user interface I was able to develop for the [automate-home project.](https://github.com/majamassarini/automate-home).
+The simplest user interface I was able to develop for the [automate-home project](https://github.com/majamassarini/automate-home).
