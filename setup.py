@@ -5,9 +5,11 @@ with open(path.join(".", 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name="automate-ws",
-      version="0.9",
+      version="0.9.1",
+      url="https://github.com/majamassarini/automate-home",
       description="A simple web server to interact with automate-home projects",
       long_description=long_description,
+      long_description_content_type='text/markdown',
       author="Maja Massarini",
       author_email="maja.massarini@gmail.com",
       data_files=[('etc/automate-home/templates', glob("ws/templates/*.html")),
