@@ -45,10 +45,10 @@ setup(
     packages=find_packages(exclude=[]),
     include_package_data=True,
     install_requires=[
-        "aiohttp_security",
-        "aiohttp_session",
-        "aiohttp-jinja2",
-        "aiohttp",
+        "aiohttp_security==0.4.0",
+        "aiohttp_session==2.9.0",
+        "aiohttp-jinja2==1.5",
+        "aiohttp==3.8.1",
         "automate-graphite-feeder",
         "automate-home-assistant-plugin",
         "automate-home",
@@ -56,7 +56,6 @@ setup(
         "automate-lifx-plugin",
         "automate-sonos-plugin",
         "colour",
-        "jinja2",
-        "multidict",
+        "multidict==4.7.6",
     ],
 )

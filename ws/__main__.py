@@ -82,7 +82,7 @@ if __name__ == "__main__":
     policy = SessionIdentityPolicy()
     brain_policy = ws.authorization.Policy()
     setup_security(app, policy, brain_policy)
-    app.credentials = brain_policy.credentials
+    app["credentials"] = brain_policy.credentials
 
     resources = Resources(
         options.project_dir,
@@ -122,4 +122,4 @@ if __name__ == "__main__":
         ),
     )
 
-    web.run_app(app, host="0.0.0.0", port=options.webserver_port)
+    web.run_app(app, host="0.0.0.0", port=options.webserver_port, loop=loop)

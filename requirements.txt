@@ -4,11 +4,9 @@ git+git://github.com/majamassarini/automate-knx-plugin.git
 git+git://github.com/majamassarini/automate-lifx-plugin.git
 git+git://github.com/majamassarini/automate-sonos-plugin.git
 git+git://github.com/majamassarini/automate-graphite-feeder.git
-aiohttp
-aiohttp-jinja2
-aiohttp-session
-aiohttp-security
-multidict
-jinja2
+aiohttp==3.8.1
+aiohttp-jinja2==1.5
+aiohttp-session==2.9.0
+aiohttp-security==0.4.0
+multidict==4.7.6
 colour
-PyYAML
