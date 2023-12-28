@@ -122,4 +122,4 @@ if __name__ == "__main__":
         ),
     )
 
-    web.run_app(app, host="0.0.0.0", port=options.webserver_port, loop=loop)
+    web.run_app(app, host="0.0.0.0", port=int(options.webserver_port), loop=loop)
