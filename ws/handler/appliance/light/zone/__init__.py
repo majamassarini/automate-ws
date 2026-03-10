@@ -11,7 +11,10 @@ class Handler(Parent):
     ICON_ALARMED_OFF = "fa fa-bell"
 
     def get_label(self, appliance):
-        if appliance.state.VALUE == home.appliance.light.zone.state.on.State.VALUE:
+        if (
+            appliance.state.VALUE
+            == home.appliance.light.zone.state.on.State.VALUE
+        ):
             return self.LABEL_ON
         elif (
             appliance.state.VALUE
@@ -37,7 +40,10 @@ class Handler(Parent):
             return self.LABEL_OFF
 
     def get_icon(self, appliance):
-        if appliance.state.VALUE == home.appliance.light.zone.state.on.State.VALUE:
+        if (
+            appliance.state.VALUE
+            == home.appliance.light.zone.state.on.State.VALUE
+        ):
             return self.ICON_ON
         elif (
             appliance.state.VALUE

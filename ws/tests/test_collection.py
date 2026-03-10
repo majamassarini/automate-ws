@@ -1,10 +1,8 @@
 import unittest
-from aiohttp.test_utils import unittest_run_loop
 from ws.tests.testcase import MyHomeTestCase
 
 
 class CollectionTestCase(MyHomeTestCase):
-    @unittest_run_loop
     async def test_get(self):
         for collection in self.app.resources.appliances:
             request = await self.client.request(

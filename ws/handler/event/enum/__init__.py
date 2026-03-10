@@ -35,7 +35,9 @@ class Handler(handler.Handler):
         event = self.KLASS(value)
         return event
 
-    def make_websocket_msg(self, appliance_id, appliance_handler, appliance, id, event):
+    def make_websocket_msg(
+        self, appliance_id, appliance_handler, appliance, id, event
+    ):
         return super(Handler, self).make_websocket_msg(
             appliance_id, appliance_handler, appliance, id, event
         )

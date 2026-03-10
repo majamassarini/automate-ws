@@ -25,7 +25,8 @@ class Handler(Parent):
                 old_old_appliance = history[idx + 1][1]
                 events = old_appliance - old_old_appliance
                 changed = (
-                    old_old_appliance.state.compute() != old_appliance.state.compute()
+                    old_old_appliance.state.compute()
+                    != old_appliance.state.compute()
                     or old_appliance.state.is_forced()
                 )
                 appliance_url = request.app.router["appliance"].url_for(
@@ -55,9 +56,13 @@ class Handler(Parent):
 
             for event in events:
                 try:
-                    handler = registry.mapper[self.get_registry_key(appliance, event)]
+                    handler = registry.mapper[
+                        self.get_registry_key(appliance, event)
+                    ]
                 except KeyError:
-                    handler = registry.mapper[self.get_registry_key(None, event)]
+                    handler = registry.mapper[
+                        self.get_registry_key(None, event)
+                    ]
                 except KeyError as e:
                     handler = None
                     logging.getLogger(__name__).error("{}".format(e))
@@ -84,8 +89,10 @@ class Handler(Parent):
         history = dict()
         for collection in self._home_resources.appliances.values():
             for appliance in collection:
-                _history = await self._home_resources.redis_gateway.get_history(
-                    appliance, 2
+                _history = (
+                    await self._home_resources.redis_gateway.get_history(
+                        appliance, 2
+                    )
                 )
                 if _history:
                     (
@@ -104,7 +111,9 @@ class Handler(Parent):
                             event_details,
                             actual_events,
                         )
-        sorted_history = collections.OrderedDict(sorted(history.items(), reverse=True))
+        sorted_history = collections.OrderedDict(
+            sorted(history.items(), reverse=True)
+        )
         return sorted_history.values()
 
     async def _get_response_data(self, request):

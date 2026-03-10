@@ -14,9 +14,13 @@ class Handler(Parent):
         username = form.get("username")
         password = form.get("password")
 
-        verified = await check_credentials(request.app["credentials"], username, password)
+        verified = await check_credentials(
+            request.app["credentials"], username, password
+        )
         if verified:
             await remember(request, response, username)
             return response
 
-        return web.HTTPUnauthorized(body="Invalid username / password combination")
+        return web.HTTPUnauthorized(
+            body="Invalid username / password combination"
+        )

@@ -4,8 +4,8 @@ import json
 from aiohttp_security import authorized_userid, permits
 from ws.authorization import Policy
 
-appliance_mapper = dict()
-event_mapper = dict()
+appliance_mapper: dict = dict()
+event_mapper: dict = dict()
 
 
 class User:
@@ -68,10 +68,14 @@ class Handler:
     def get_event_handler(self, appliance, event, get_class=True):  # noqa
         handler = None
         try:
-            handler = event_mapper[self.get_registry_key(appliance, event, get_class)]
+            handler = event_mapper[
+                self.get_registry_key(appliance, event, get_class)
+            ]
         except KeyError:
             try:
-                handler = event_mapper[self.get_registry_key(None, event, get_class)]
+                handler = event_mapper[
+                    self.get_registry_key(None, event, get_class)
+                ]
             except KeyError:
                 self._logger.error(
                     "No html representation for event {} of class {}".format(
@@ -120,7 +124,9 @@ class Handler:
                 bean.set_id_enabled(appliance_id, num)
                 bean.set_id_icon(appliance_id, num)
                 bean.set_id_label(appliance_id, num)
-                bean.set_is_displayed(appliance_handler.is_displayed(appliance, event))
+                bean.set_is_displayed(
+                    appliance_handler.is_displayed(appliance, event)
+                )
                 beans.append(bean)
 
         beans.reverse()

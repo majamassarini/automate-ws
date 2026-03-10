@@ -41,9 +41,13 @@ class Handler(Parent):
     ):
         urls = list()
         targets = list()
-        handler = graphite_feeder.handler.appliance.registry.mapper[appliance.__class__]
+        handler = graphite_feeder.handler.appliance.registry.mapper[
+            appliance.__class__
+        ]
         try:
-            targets = handler(self._home_resources, appliance, from_number, from_unit)
+            targets = handler(
+                self._home_resources, appliance, from_number, from_unit
+            )
         except TypeError:
             self._logger.warning("handler {} not mapped".format(handler))
 
@@ -67,7 +71,9 @@ class Handler(Parent):
             self._url2, appliance, from_number, from_unit
         )
         collection = self._home_resources.appliances.collection_for(appliance)
-        collection_url = request.app.router["collection"].url_for(name=collection)
+        collection_url = request.app.router["collection"].url_for(
+            name=collection
+        )
         graphs_url = request.app.router["graphs"].url_for(name=appliance.name)
         user = await self.get_user(request)
         return {

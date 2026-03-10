@@ -87,11 +87,11 @@ class Handler(Parent):
             ),
         ):
             result = True
-        elif (
-            appliance.state.VALUE
-            == home.appliance.light.indoor.dimmerable.state.forced.on.State.VALUE
-            and type(event) == type(home.appliance.light.event.brightness.Event(0))  # noqa
-        ):
+        elif appliance.state.VALUE == home.appliance.light.indoor.dimmerable.state.forced.on.State.VALUE and type(
+            event
+        ) == type(
+            home.appliance.light.event.brightness.Event(0)
+        ):  # noqa
             result = True
         elif (
             appliance.state.VALUE
@@ -108,16 +108,16 @@ class Handler(Parent):
             )
         ):
             result = True
-        elif (
-            appliance.state.VALUE
-            == home.appliance.light.indoor.dimmerable.state.forced.lux_balance.State.VALUE
-            and type(event) == type(home.appliance.light.event.lux_balancing.brightness.Event(0))  # noqa
-        ):
+        elif appliance.state.VALUE == home.appliance.light.indoor.dimmerable.state.forced.lux_balance.State.VALUE and type(
+            event
+        ) == type(
+            home.appliance.light.event.lux_balancing.brightness.Event(0)
+        ):  # noqa
             result = True
-        elif (
-            appliance.state.VALUE
-            == home.appliance.light.indoor.dimmerable.state.forced.circadian_rhythm.State.VALUE
-            and type(event) == type(home.appliance.light.event.circadian_rhythm.brightness.Event(0))  # noqa
-        ):
+        elif appliance.state.VALUE == home.appliance.light.indoor.dimmerable.state.forced.circadian_rhythm.State.VALUE and type(
+            event
+        ) == type(
+            home.appliance.light.event.circadian_rhythm.brightness.Event(0)
+        ):  # noqa
             result = True
         return result

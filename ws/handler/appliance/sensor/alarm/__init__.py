@@ -19,7 +19,8 @@ class Handler(Parent):
         ):
             return self.LABEL_UNARMED
         elif (
-            appliance.state.VALUE == home.appliance.sensor.alarm.state.armed.State.VALUE
+            appliance.state.VALUE
+            == home.appliance.sensor.alarm.state.armed.State.VALUE
         ):
             return self.LABEL_ARMED
         elif (
@@ -35,7 +36,8 @@ class Handler(Parent):
         ):
             return self.ICON_UNARMED
         elif (
-            appliance.state.VALUE == home.appliance.sensor.alarm.state.armed.State.VALUE
+            appliance.state.VALUE
+            == home.appliance.sensor.alarm.state.armed.State.VALUE
         ):
             return self.ICON_ARMED
         elif (

@@ -108,18 +108,23 @@ class Handler(Parent):
             appliance.state.VALUE
             == home.appliance.light.indoor.dimmerable.state.forced.lux_balance.State.VALUE
             and isinstance(
-                event, home.appliance.light.event.lux_balancing.brightness.Event
+                event,
+                home.appliance.light.event.lux_balancing.brightness.Event,
             )
         ):
             result = True
-        elif appliance.state.VALUE == home.appliance.light.indoor.dimmerable.state.forced.circadian_rhythm.State.VALUE and isinstance(
-            event,
-            (
-                home.appliance.light.event.circadian_rhythm.brightness.Event,
-                home.appliance.light.event.circadian_rhythm.hue.Event,
-                home.appliance.light.event.circadian_rhythm.temperature.Event,
-                home.appliance.light.event.circadian_rhythm.saturation.Event,
-            ),
+        elif (
+            appliance.state.VALUE
+            == home.appliance.light.indoor.dimmerable.state.forced.circadian_rhythm.State.VALUE
+            and isinstance(
+                event,
+                (
+                    home.appliance.light.event.circadian_rhythm.brightness.Event,
+                    home.appliance.light.event.circadian_rhythm.hue.Event,
+                    home.appliance.light.event.circadian_rhythm.temperature.Event,
+                    home.appliance.light.event.circadian_rhythm.saturation.Event,
+                ),
+            )
         ):
             result = True
         return result

@@ -1,0 +1,71 @@
+name: Build
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch:
+    inputs:
+      automate_home_branch:
+        description: "automate-home branch to install"
+        required: false
+        default: "main"
+
+env:
+  AUTOMATE_HOME_BRANCH: ${{ github.event.inputs.automate_home_branch || 'main' }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install ".[dev]"
+          pip install git+https://github.com/majamassarini/automate-home.git@${{ env.AUTOMATE_HOME_BRANCH }}
+          pip install git+https://github.com/majamassarini/automate-knx-plugin.git
+          pip install git+https://github.com/majamassarini/automate-lifx-plugin.git
+          pip install git+https://github.com/majamassarini/automate-sonos-plugin.git
+
+      - name: black
+        run: black --check .
+
+      - name: flake8
+        run: flake8 ws
+
+      - name: mypy
+        run: mypy ws
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install ".[dev]"
+          pip install git+https://github.com/majamassarini/automate-home.git@${{ env.AUTOMATE_HOME_BRANCH }}
+          pip install git+https://github.com/majamassarini/automate-knx-plugin.git
+          pip install git+https://github.com/majamassarini/automate-lifx-plugin.git
+          pip install git+https://github.com/majamassarini/automate-sonos-plugin.git
+
+      - name: Run unit tests
+        run: |
+          python -m coverage run -m unittest discover \
+            -s ws/tests -p 'test*.py' -v

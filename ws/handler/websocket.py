@@ -28,7 +28,9 @@ class Handler(Parent):
             for websocket in self._home_resources.websockets:
                 msg = self.make_websocket_msg(appliance)
                 await websocket.send_str(msg)
-                appliance_handler = appliance_registry.mapper[appliance.__class__]
+                appliance_handler = appliance_registry.mapper[
+                    appliance.__class__
+                ]
                 for num, event in enumerate(appliance.events):
                     try:
                         try:
