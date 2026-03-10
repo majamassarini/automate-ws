@@ -1,10 +1,8 @@
 import unittest
-from aiohttp.test_utils import unittest_run_loop
 from ws.tests.testcase import MyHomeTestCase
 
 
 class CollectionsTestCase(MyHomeTestCase):
-    @unittest_run_loop
     async def test_get(self):
         request = await self.client.request("GET", "/collections")
         assert request.status == 200

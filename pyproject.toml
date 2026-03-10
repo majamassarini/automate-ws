@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "automate-ws"
+version = "0.9.1"
+description = "A simple web server to interact with automate-home projects"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Maja Massarini", email = "maja.massarini@gmail.com" }]
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Intended Audience :: Developers",
+]
+dependencies = [
+    "aiohttp>=3.9",
+    "aiohttp-jinja2>=1.6",
+    "aiohttp-session>=2.12",
+    "aiohttp-security>=0.5",
+    "automate-home",
+    "automate-knx-plugin",
+    "automate-lifx-plugin",
+    "automate-sonos-plugin",
+    "colour",
+    "redis>=4.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage",
+    "black==24.10.0",
+    "flake8==7.1.1",
+    "flake8-pyproject",
+    "mypy==1.13.0",
+    "pre-commit",
+]
+
+[project.urls]
+Homepage = "https://github.com/majamassarini/automate-home"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ws*"]
+
+[tool.setuptools.package-data]
+"ws" = [
+    "templates/*.html",
+    "templates/light/*.html",
+    "templates/light/event/*.html",
+    "templates/event/*.html",
+    "static/*.css",
+    "static/*.js",
+    "static/*.png",
+    "static/*.svg",
+    "static/block/*.js",
+    "static/generator/*.js",
+    "static/msg/js/*.js",
+    "static/msg/json/*.js",
+]
+
+[tool.black]
+line-length = 79
+
+[tool.flake8]
+ignore = ["F821"]
+extend-ignore = ["W503", "E501", "W505", "E704", "E721"]
+max-line-length = 90
+max-doc-length = 120
+per-file-ignores = [
+    "__init__.py:F401,E402",
+    "__main__.py:F401",
+    "ws/handler/event/enum/__init__.py:F401,E402,F811",
+]
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+
+[tool.coverage.run]
+command_line = "-m unittest discover"
+omit = ["*tests*", "*__init__.py"]
+
+[tool.coverage.report]
+omit = ["*tests*", "*__init__.py"]

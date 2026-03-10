@@ -35,9 +35,13 @@ class Handler(Parent):
             event_details = list()
             for event in events:
                 try:
-                    handler = registry.mapper[self.get_registry_key(appliance, event)]
+                    handler = registry.mapper[
+                        self.get_registry_key(appliance, event)
+                    ]
                 except KeyError as e:
-                    handler = registry.mapper[self.get_registry_key(None, event)]
+                    handler = registry.mapper[
+                        self.get_registry_key(None, event)
+                    ]
                     logging.getLogger(__name__).error("{}".format(e))
 
                 if handler:
@@ -64,8 +68,12 @@ class Handler(Parent):
     async def _get_response_data(self, request, appliance, num_of_events):
         history = await self.get_history(appliance, num_of_events)
         collection = self._home_resources.appliances.collection_for(appliance)
-        collection_url = request.app.router["collection"].url_for(name=collection)
-        history_url = request.app.router["history"].url_for(name=appliance.name)
+        collection_url = request.app.router["collection"].url_for(
+            name=collection
+        )
+        history_url = request.app.router["history"].url_for(
+            name=appliance.name
+        )
         user = await self.get_user(request)
         return {
             "user": user,

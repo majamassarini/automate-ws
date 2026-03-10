@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import ClassVar, Optional
 import json
 
 from ws.handler.event.registry import Registry
@@ -39,10 +40,10 @@ class Bean:
 
 class Handler(metaclass=Registry):
 
-    KLASS = None
-    APPLIANCE_KLASS = None
-    TEMPLATE = None
-    LABEL = None
+    KLASS: ClassVar[Optional[type]] = None
+    APPLIANCE_KLASS: ClassVar[Optional[type]] = None
+    TEMPLATE: ClassVar[Optional[str]] = None
+    LABEL: ClassVar[Optional[str]] = None
 
     def __init__(self, home_resources):
         self._home_resources = home_resources
@@ -54,12 +55,10 @@ class Handler(metaclass=Registry):
         return self.KLASS.__name__
 
     @abstractmethod
-    def get(self, event):
-        ...
+    def get(self, event): ...
 
     @abstractmethod
-    def post(self, request_data):
-        ...
+    def post(self, request_data): ...
 
     def _make_msg_label(self, event):
         return event
@@ -82,7 +81,9 @@ class Handler(metaclass=Registry):
         self, appliance_id, appliance_handler, appliance, num, event
     ):
         msg = json.dumps(
-            self.make_msg(appliance_id, appliance_handler, appliance, num, event),
+            self.make_msg(
+                appliance_id, appliance_handler, appliance, num, event
+            ),
             cls=self._home_resources.json_encoder,
         )
         return msg

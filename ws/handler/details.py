@@ -17,7 +17,10 @@ class Handler(Parent):
     def get_group_of_performers(self, appliance):
         group_of_performers_names = set()
         group_of_performers = set()
-        for key, value in self._home_resources.brain_group_of_performers.items():
+        for (
+            key,
+            value,
+        ) in self._home_resources.brain_group_of_performers.items():
             for performer in value:
                 if performer.is_for(appliance):
                     group_of_performers_names.add(key)
@@ -26,7 +29,7 @@ class Handler(Parent):
 
     def get_scheduler_triggers(self, group_of_performers):
         scheduler_triggers = set()
-        for (performers, triggers) in self._home_resources.brain_schedule_infos:
+        for performers, triggers in self._home_resources.brain_schedule_infos:
             if set(performers).intersection(set(group_of_performers)):
                 for trigger in triggers:
                     scheduler_triggers.add(
@@ -38,13 +41,17 @@ class Handler(Parent):
 
     async def _get_response_data(self, request, appliance):
         performers = self.get_performers(appliance)
-        group_of_performers_names, group_of_performers = self.get_group_of_performers(
-            appliance
+        group_of_performers_names, group_of_performers = (
+            self.get_group_of_performers(appliance)
         )
         scheduler_triggers = self.get_scheduler_triggers(group_of_performers)
         collection = self._home_resources.appliances.collection_for(appliance)
-        collection_url = request.app.router["collection"].url_for(name=collection)
-        history_url = request.app.router["history"].url_for(name=appliance.name)
+        collection_url = request.app.router["collection"].url_for(
+            name=collection
+        )
+        history_url = request.app.router["history"].url_for(
+            name=appliance.name
+        )
         user = await self.get_user(request)
         return {
             "user": user,

@@ -9,7 +9,8 @@ from multidict import MultiDict  # noqa
 from ws.handler.appliance import Handler as Parent
 
 START = """
-from typing import NamedTuple, Iterable
+from collections.abc import Iterable
+from typing import NamedTuple
 
 import home
 import knx_plugin

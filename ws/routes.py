@@ -8,12 +8,18 @@ def setup(app, resources, websocket_handler, graphs_handler):
     collection_handler = handler.collection.Handler(resources)
     appliance_handler = handler.appliance.Handler(resources)
     event_enable_handler = handler.appliance.enable.Handler(resources)
-    send_to_collection_handler = handler.appliance.send_to_collection.Handler(resources)
-    send_to_others_handler = handler.appliance.send_to_others.Handler(resources)
-    apply_to_collection_handler = handler.appliance.apply_to_collection.Handler(
+    send_to_collection_handler = handler.appliance.send_to_collection.Handler(
         resources
     )
-    apply_to_others_handler = handler.appliance.apply_to_others.Handler(resources)
+    send_to_others_handler = handler.appliance.send_to_others.Handler(
+        resources
+    )
+    apply_to_collection_handler = (
+        handler.appliance.apply_to_collection.Handler(resources)
+    )
+    apply_to_others_handler = handler.appliance.apply_to_others.Handler(
+        resources
+    )
     history_handler = handler.history.Handler(resources)
     details_handler = handler.details.Handler(resources)
     editor_handler = handler.editor.Handler(resources)
@@ -43,9 +49,13 @@ def setup(app, resources, websocket_handler, graphs_handler):
             web.post(appliance_regexp, appliance_handler.post),
             web.get(appliance_regexp, appliance_handler.get),
             web.post(event_enable_regexp, event_enable_handler.post),
-            web.post(send_to_collection_regexp, send_to_collection_handler.post),
+            web.post(
+                send_to_collection_regexp, send_to_collection_handler.post
+            ),
             web.post(send_to_others_regexp, send_to_others_handler.post),
-            web.post(apply_to_collection_regexp, apply_to_collection_handler.post),
+            web.post(
+                apply_to_collection_regexp, apply_to_collection_handler.post
+            ),
             web.post(apply_to_others_regexp, apply_to_others_handler.post),
             web.get(history_regexp, history_handler.get),
             web.post(history_regexp, history_handler.post),
@@ -56,9 +66,13 @@ def setup(app, resources, websocket_handler, graphs_handler):
     app.router.add_resource(collection_regexp, name="collection")
     app.router.add_resource(appliance_regexp, name="appliance")
     app.router.add_resource(event_enable_regexp, name="event_enable")
-    app.router.add_resource(send_to_collection_regexp, name="send_to_collection")
+    app.router.add_resource(
+        send_to_collection_regexp, name="send_to_collection"
+    )
     app.router.add_resource(send_to_others_regexp, name="send_to_others")
-    app.router.add_resource(apply_to_collection_regexp, name="apply_to_collection")
+    app.router.add_resource(
+        apply_to_collection_regexp, name="apply_to_collection"
+    )
     app.router.add_resource(apply_to_others_regexp, name="apply_to_others")
     app.router.add_resource(history_regexp, name="history")
     app.router.add_resource(details_regexp, name="details")

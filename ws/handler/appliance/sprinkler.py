@@ -13,9 +13,15 @@ class Handler(Parent):
     ICON_FORCED_PARTIALLY_ON = "far fa-hand-point-right"
 
     def get_label(self, appliance):
-        if appliance.state.VALUE == home.appliance.sprinkler.state.on.State.VALUE:
+        if (
+            appliance.state.VALUE
+            == home.appliance.sprinkler.state.on.State.VALUE
+        ):
             return self.LABEL_ON
-        elif appliance.state.VALUE == home.appliance.sprinkler.state.off.State.VALUE:
+        elif (
+            appliance.state.VALUE
+            == home.appliance.sprinkler.state.off.State.VALUE
+        ):
             return self.LABEL_OFF
         elif (
             appliance.state.VALUE
@@ -39,9 +45,15 @@ class Handler(Parent):
             return self.LABEL_FORCED_PARTIALLY_ON
 
     def get_icon(self, appliance):
-        if appliance.state.VALUE == home.appliance.sprinkler.state.on.State.VALUE:
+        if (
+            appliance.state.VALUE
+            == home.appliance.sprinkler.state.on.State.VALUE
+        ):
             return self.ICON_ON
-        elif appliance.state.VALUE == home.appliance.sprinkler.state.off.State.VALUE:
+        elif (
+            appliance.state.VALUE
+            == home.appliance.sprinkler.state.off.State.VALUE
+        ):
             return self.ICON_OFF
         elif (
             appliance.state.VALUE
@@ -71,8 +83,10 @@ class Handler(Parent):
             == home.appliance.sprinkler.state.forced.on.State.VALUE
             or appliance.state.VALUE
             == home.appliance.sprinkler.state.forced.off.State.VALUE
-            or appliance.state.VALUE == home.appliance.sprinkler.state.on.State.VALUE
-            or appliance.state.VALUE == home.appliance.sprinkler.state.off.State.VALUE
+            or appliance.state.VALUE
+            == home.appliance.sprinkler.state.on.State.VALUE
+            or appliance.state.VALUE
+            == home.appliance.sprinkler.state.off.State.VALUE
         ) and isinstance(
             event, home.appliance.sprinkler.event.partially_on.duration.Event
         ):
@@ -85,7 +99,8 @@ class Handler(Parent):
         ) and (
             isinstance(event, home.appliance.sprinkler.event.duration.Event)
             and not isinstance(
-                event, home.appliance.sprinkler.event.partially_on.duration.Event
+                event,
+                home.appliance.sprinkler.event.partially_on.duration.Event,
             )
         ):
             result = False

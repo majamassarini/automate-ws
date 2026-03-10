@@ -18,9 +18,15 @@ class Handler(forced.Handler):
     ICON_SHOW = "fas fa-magic"
 
     def _get_str(self, e):
-        if e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On:
+        if (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On
+        ):
             return self.ON
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off
+        ):
             return self.OFF
         elif (
             e
@@ -32,16 +38,28 @@ class Handler(forced.Handler):
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.LuxBalance
         ):
             return self.LUX_BALANCING
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Show:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Show
+        ):
             return self.SHOW
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not
+        ):
             return self.NO
         return e
 
     def get_description(self, e):
-        if e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On:
+        if (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On
+        ):
             return self.FORCED_ON
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off
+        ):
             return self.FORCED_OFF
         elif (
             e
@@ -53,16 +71,28 @@ class Handler(forced.Handler):
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.LuxBalance
         ):
             return self.LUX_BALANCING
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Show:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Show
+        ):
             return self.FORCED_SHOW
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not
+        ):
             return self.FORCED_NOT
         return e
 
     def get_icon(self, e):
-        if e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On:
+        if (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On
+        ):
             return self.ICON_UP
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off
+        ):
             return self.ICON_DOWN
         elif (
             e
@@ -74,8 +104,14 @@ class Handler(forced.Handler):
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.LuxBalance
         ):
             return self.ICON_LUX_BALANCING
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Show:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Show
+        ):
             return self.ICON_SHOW
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not
+        ):
             return self.ICON_OK
         return e

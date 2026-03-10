@@ -11,9 +11,9 @@ class Handler(Parent):
         appliances = list()
         for appliance in self._home_resources.appliances[collection]:
             await self._home_resources.redis_gateway.update(appliance)
-            appliances_urls[appliance.name] = request.app.router["appliance"].url_for(
-                name=appliance.name
-            )
+            appliances_urls[appliance.name] = request.app.router[
+                "appliance"
+            ].url_for(name=appliance.name)
             appliances.append(
                 (
                     appliance,

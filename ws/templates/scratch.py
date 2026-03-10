@@ -1,4 +1,5 @@
-from typing import NamedTuple, Iterable
+from collections.abc import Iterable
+from typing import NamedTuple
 
 import home
 import knx_plugin
@@ -81,7 +82,10 @@ class Blockly(home.MyHome):
         for appliance_names, scheduler_triggers_ in self.__scheduler:
             for appliance_name in appliance_names:
                 schedule_infos.append(
-                    (appliance_command_performers[appliance_name], scheduler_triggers_)
+                    (
+                        appliance_command_performers[appliance_name],
+                        scheduler_triggers_,
+                    )
                 )
         return schedule_infos
 
@@ -212,7 +216,9 @@ triggered_on_performer = home.Performer(
         ]
     ),
 )
-trigger_performers.append(PerformerTriggerInfo("pluto", triggered_on_performer))
+trigger_performers.append(
+    PerformerTriggerInfo("pluto", triggered_on_performer)
+)
 triggered_off_performer = home.Performer(
     "trigger armed off for pluto",
     appliance,
@@ -232,7 +238,9 @@ triggered_off_performer = home.Performer(
         ]
     ),
 )
-trigger_performers.append(PerformerTriggerInfo("pluto", triggered_off_performer))
+trigger_performers.append(
+    PerformerTriggerInfo("pluto", triggered_off_performer)
+)
 command_performer = home.Performer(
     "commands for pluto",
     appliance,
@@ -320,4 +328,6 @@ scheduler.append(
 )
 
 
-blockly_builder = Blockly(appliances, trigger_performers, command_performers, scheduler)
+blockly_builder = Blockly(
+    appliances, trigger_performers, command_performers, scheduler
+)
