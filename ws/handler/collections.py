@@ -9,9 +9,9 @@ class Handler(Parent):
         collections_urls = {}
         collections = list()
         for collection in self._home_resources.appliances:
-            collections_urls[collection] = request.app.router["collection"].url_for(
-                name=collection
-            )
+            collections_urls[collection] = request.app.router[
+                "collection"
+            ].url_for(name=collection)
             appliance_beans = [
                 self.get_appliance_bean(appliance)
                 for appliance in self._home_resources.appliances[collection]

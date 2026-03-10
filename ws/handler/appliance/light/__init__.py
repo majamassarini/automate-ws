@@ -17,9 +17,15 @@ class Handler(Parent):
     def get_label(self, appliance):
         if appliance.state.VALUE == home.appliance.light.state.on.State.VALUE:
             return self.LABEL_ON
-        elif appliance.state.VALUE == home.appliance.light.state.forced.on.State.VALUE:
+        elif (
+            appliance.state.VALUE
+            == home.appliance.light.state.forced.on.State.VALUE
+        ):
             return self.LABEL_FORCED_ON
-        elif appliance.state.VALUE == home.appliance.light.state.forced.off.State.VALUE:
+        elif (
+            appliance.state.VALUE
+            == home.appliance.light.state.forced.off.State.VALUE
+        ):
             return self.LABEL_FORCED_OFF
         else:
             return self.LABEL_OFF
@@ -27,9 +33,15 @@ class Handler(Parent):
     def get_icon(self, appliance):
         if appliance.state.VALUE == home.appliance.light.state.on.State.VALUE:
             return self.ICON_ON
-        elif appliance.state.VALUE == home.appliance.light.state.forced.on.State.VALUE:
+        elif (
+            appliance.state.VALUE
+            == home.appliance.light.state.forced.on.State.VALUE
+        ):
             return self.ICON_FORCED_ON
-        elif appliance.state.VALUE == home.appliance.light.state.forced.off.State.VALUE:
+        elif (
+            appliance.state.VALUE
+            == home.appliance.light.state.forced.off.State.VALUE
+        ):
             return self.ICON_FORCED_OFF
         else:
             return self.ICON_OFF

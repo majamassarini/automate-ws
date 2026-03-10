@@ -15,7 +15,10 @@ class Handler(forced.Handler):
             return self.ON
         elif e == home.appliance.sound.player.event.forced.event.Event.Off:
             return self.OFF
-        elif e == home.appliance.sound.player.event.forced.event.Event.CircadianRhythm:
+        elif (
+            e
+            == home.appliance.sound.player.event.forced.event.Event.CircadianRhythm
+        ):
             return self.CIRCADIAN_RHYTHM
         elif e == home.appliance.sound.player.event.forced.event.Event.Not:
             return self.NO
@@ -26,22 +29,34 @@ class Handler(forced.Handler):
             return self.FORCED_ON
         elif e == home.appliance.sound.player.event.forced.event.Event.Off:
             return self.FORCED_OFF
-        elif e == home.appliance.sound.player.event.forced.event.Event.CircadianRhythm:
+        elif (
+            e
+            == home.appliance.sound.player.event.forced.event.Event.CircadianRhythm
+        ):
             return self.FORCED_CIRCADIAN_RHYTHM
         elif e == home.appliance.sound.player.event.forced.event.Event.Not:
             return self.NO
         return e
 
     def get_icon(self, e):
-        if e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On:
+        if (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On
+        ):
             return self.ICON_UP
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off
+        ):
             return self.ICON_DOWN
         elif (
             e
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.CircadianRhythm
         ):
             return self.CIRCADIAN_RHYTHM
-        elif e == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not:
+        elif (
+            e
+            == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Not
+        ):
             return self.ICON_OK
         return e

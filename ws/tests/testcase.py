@@ -38,7 +38,9 @@ class RedisGatewayStub:
 
 
 class Resources(home.builder.listener.Resources):
-    def __init__(self, redis_host, redis_port, my_node_name, other_nodes_names):
+    def __init__(
+        self, redis_host, redis_port, my_node_name, other_nodes_names
+    ):
         from ws.tests import testcase  # noqa
 
         yaml_dir = os.path.join(
@@ -63,7 +65,8 @@ class MyHomeTestCase(AioHTTPTestCase):
 
         on_redis_msg = ws.OnRedisMsg(websocket_handler, resources)
         resources.redis_gateway.run(
-            on_redis_msg.on_appliance_updated, on_redis_msg.on_performer_updated
+            on_redis_msg.on_appliance_updated,
+            on_redis_msg.on_performer_updated,
         )
 
         graphs_handler = ws.handler.graphs.Handler(resources, None, None)
@@ -72,7 +75,8 @@ class MyHomeTestCase(AioHTTPTestCase):
         app.add_routes(
             [
                 web.static(
-                    "/static", os.path.join(os.path.dirname(__file__), "../static")
+                    "/static",
+                    os.path.join(os.path.dirname(__file__), "../static"),
                 )
             ]
         )

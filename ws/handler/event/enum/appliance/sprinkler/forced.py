@@ -18,7 +18,9 @@ class Handler(forced.Handler):
             return self.ON
         elif e == home.appliance.sprinkler.event.forced.event.Event.Off:
             return self.OFF
-        elif e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn:
+        elif (
+            e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn
+        ):
             return self.PARTIALLY_ON
         elif e == home.appliance.sprinkler.event.forced.event.Event.Not:
             return self.NO
@@ -29,7 +31,9 @@ class Handler(forced.Handler):
             return self.FORCED_ON
         elif e == home.appliance.sprinkler.event.forced.event.Event.Off:
             return self.FORCED_OFF
-        elif e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn:
+        elif (
+            e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn
+        ):
             return self.FORCED_PARTIALLY_ON
         elif e == home.appliance.sprinkler.event.forced.event.Event.Not:
             return self.NO
@@ -40,7 +44,9 @@ class Handler(forced.Handler):
             return self.ICON_UP
         elif e == home.appliance.sprinkler.event.forced.event.Event.Off:
             return self.ICON_DOWN
-        elif e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn:
+        elif (
+            e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn
+        ):
             return self.ICON_PARTIALLY_ON
         elif e == home.appliance.sprinkler.event.forced.event.Event.Not:
             return self.ICON_OK

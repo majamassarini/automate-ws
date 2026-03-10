@@ -1,3 +1,5 @@
+from typing import Optional
+
 from aiohttp_security.abc import AbstractAuthorizationPolicy
 
 
@@ -10,12 +12,18 @@ class Policy(AbstractAuthorizationPolicy):
     EDIT_PERMISSION = "edit"
     CONFIGURE_PERMISSION = "configure"
 
-    def __init__(self, credentials: dict = None, roles: dict = None):
+    def __init__(
+        self, credentials: Optional[dict] = None, roles: Optional[dict] = None
+    ):
         super().__init__()
         if credentials:
             self._credentials = credentials
         else:
-            self._credentials = {"admin": "admin", "user": "user", "anonymous": ""}
+            self._credentials = {
+                "admin": "admin",
+                "user": "user",
+                "anonymous": "",
+            }
         if roles:
             self._roles = roles
         else:

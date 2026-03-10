@@ -13,7 +13,10 @@ class Handler(Parent):
     ICON_OFF = "far fa-play-circle"
 
     def get_label(self, appliance):
-        if appliance.state.VALUE == home.appliance.sound.player.state.off.State.VALUE:
+        if (
+            appliance.state.VALUE
+            == home.appliance.sound.player.state.off.State.VALUE
+        ):
             return self.LABEL_OFF
         elif (
             appliance.state.VALUE
@@ -37,7 +40,10 @@ class Handler(Parent):
             return self.LABEL_FORCED_CIRCADIAN_RHYTHM
 
     def get_icon(self, appliance):
-        if appliance.state.VALUE == home.appliance.sound.player.state.off.State.VALUE:
+        if (
+            appliance.state.VALUE
+            == home.appliance.sound.player.state.off.State.VALUE
+        ):
             return self.ICON_OFF
         elif (
             appliance.state.VALUE

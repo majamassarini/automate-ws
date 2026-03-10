@@ -1,3 +1,5 @@
+from typing import ClassVar, Optional
+
 from ws.handler.event import handler
 
 
@@ -11,7 +13,7 @@ class Handler(handler.Handler):
 
     KLASS = float
     TEMPLATE = "event/float.html"
-    LABEL = "Value: "
+    LABEL: ClassVar[Optional[str]] = "Value: "
 
     def get(self, event):
         return Bean(

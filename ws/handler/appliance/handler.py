@@ -26,10 +26,16 @@ class Handler(Parent):
     async def _get_response_data(self, request, appliance):
         templates = self.get_templates(appliance)
         collection = self._home_resources.appliances.collection_for(appliance)
-        collection_url = request.app.router["collection"].url_for(name=collection)
-        history_url = request.app.router["history"].url_for(name=appliance.name)
+        collection_url = request.app.router["collection"].url_for(
+            name=collection
+        )
+        history_url = request.app.router["history"].url_for(
+            name=appliance.name
+        )
         graphs_url = request.app.router["graphs"].url_for(name=appliance.name)
-        details_url = request.app.router["details"].url_for(name=appliance.name)
+        details_url = request.app.router["details"].url_for(
+            name=appliance.name
+        )
         user = await self.get_user(request)
 
         return {
@@ -47,12 +53,12 @@ class Handler(Parent):
             "apply_to_collection_url": request.app.router[
                 "apply_to_collection"
             ].url_for(name=appliance.name),
-            "apply_to_others_url": request.app.router["apply_to_others"].url_for(
-                name=appliance.name
-            ),
-            "send_to_collection_url": request.app.router["send_to_collection"].url_for(
-                name=appliance.name
-            ),
+            "apply_to_others_url": request.app.router[
+                "apply_to_others"
+            ].url_for(name=appliance.name),
+            "send_to_collection_url": request.app.router[
+                "send_to_collection"
+            ].url_for(name=appliance.name),
             "send_to_others_url": request.app.router["send_to_others"].url_for(
                 name=appliance.name
             ),
