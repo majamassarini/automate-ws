@@ -2,7 +2,7 @@ from aiohttp import web
 from ws import handler
 
 
-def setup(app, resources, websocket_handler, graphs_handler):
+def setup(app, resources, websocket_handler):
     index_handler = handler.index.Handler(resources)
     collections_handler = handler.collections.Handler(resources)
     collection_handler = handler.collection.Handler(resources)
@@ -33,7 +33,6 @@ def setup(app, resources, websocket_handler, graphs_handler):
     apply_to_collection_regexp = r"/appliance/{name}/apply_to_collection"
     apply_to_others_regexp = r"/appliance/{name}/apply_to_others"
     history_regexp = r"/appliance/{name}/history"
-    graphs_regexp = r"/appliance/{name}/graphs"
     details_regexp = r"/appliance/{name}/details"
     app.router.add_routes(
         [
@@ -76,12 +75,3 @@ def setup(app, resources, websocket_handler, graphs_handler):
     app.router.add_resource(apply_to_others_regexp, name="apply_to_others")
     app.router.add_resource(history_regexp, name="history")
     app.router.add_resource(details_regexp, name="details")
-
-    if graphs_handler:
-        app.router.add_routes(
-            [
-                web.get(graphs_regexp, graphs_handler.get),
-                web.post(graphs_regexp, graphs_handler.post),
-            ]
-        )
-    app.router.add_resource(graphs_regexp, name="graphs")

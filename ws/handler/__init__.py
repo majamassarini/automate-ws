@@ -155,7 +155,6 @@ from ws.handler import (
     websocket,
     history,
     details,
-    graphs,
     editor,
     login,
     logout,
