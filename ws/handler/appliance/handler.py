@@ -32,7 +32,6 @@ class Handler(Parent):
         history_url = request.app.router["history"].url_for(
             name=appliance.name
         )
-        graphs_url = request.app.router["graphs"].url_for(name=appliance.name)
         details_url = request.app.router["details"].url_for(
             name=appliance.name
         )
@@ -65,7 +64,6 @@ class Handler(Parent):
             "event_beans": self.get_event_beans(appliance),
             "collection_url": collection_url,
             "history_url": history_url,
-            "graphs_url": graphs_url,
             "details_url": details_url,
             "collection": collection,
         }

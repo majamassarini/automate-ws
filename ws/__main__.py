@@ -91,15 +91,6 @@ if __name__ == "__main__":
             options.webserver_other_nodes_names,
         )
         websocket_handler = ws.handler.websocket.Handler(resources)
-        if options.graphite_feeder:
-            graphs_handler = ws.handler.graphs.Handler(
-                resources,
-                options.graphite_feeder_server_host,
-                options.graphite_feeder_server_port,
-            )
-        else:
-            graphs_handler = None
-
         on_redis_msg = ws.OnRedisMsg(websocket_handler, resources)
         await resources.redis_gateway.connect()
         resources.redis_gateway.create_tasks(
@@ -109,7 +100,7 @@ if __name__ == "__main__":
         )
         app.on_shutdown.append(websocket_handler.on_shutdown)
 
-        ws.routes.setup(app, resources, websocket_handler, graphs_handler)
+        ws.routes.setup(app, resources, websocket_handler)
         app.add_routes(
             [
                 web.static(

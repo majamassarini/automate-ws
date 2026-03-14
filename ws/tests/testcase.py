@@ -69,9 +69,7 @@ class MyHomeTestCase(AioHTTPTestCase):
             on_redis_msg.on_performer_updated,
         )
 
-        graphs_handler = ws.handler.graphs.Handler(resources, None, None)
-
-        ws.routes.setup(app, resources, websocket_handler, graphs_handler)
+        ws.routes.setup(app, resources, websocket_handler)
         app.add_routes(
             [
                 web.static(
