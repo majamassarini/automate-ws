@@ -10,10 +10,25 @@ on:
       automate_home_branch:
         description: "automate-home branch to install"
         required: false
-        default: "main"
+        default: "dev"
+      automate_knx_branch:
+        description: "automate-knx-plugin branch to install"
+        required: false
+        default: "dev"
+      automate_lifx_branch:
+        description: "automate-lifx-plugin branch to install"
+        required: false
+        default: "dev"
+      automate_sonos_branch:
+        description: "automate-sonos-plugin branch to install"
+        required: false
+        default: "dev"
 
 env:
-  AUTOMATE_HOME_BRANCH: ${{ github.event.inputs.automate_home_branch || 'main' }}
+  AUTOMATE_HOME_BRANCH: ${{ github.event.inputs.automate_home_branch || github.base_ref || github.ref_name || 'dev' }}
+  AUTOMATE_KNX_BRANCH: ${{ github.event.inputs.automate_knx_branch || github.base_ref || github.ref_name || 'dev' }}
+  AUTOMATE_LIFX_BRANCH: ${{ github.event.inputs.automate_lifx_branch || github.base_ref || github.ref_name || 'dev' }}
+  AUTOMATE_SONOS_BRANCH: ${{ github.event.inputs.automate_sonos_branch || github.base_ref || github.ref_name || 'dev' }}
 
 jobs:
   checks:
@@ -29,10 +44,10 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install ".[dev]"
-          pip install git+https://github.com/majamassarini/automate-home.git@${{ env.AUTOMATE_HOME_BRANCH }}
-          pip install git+https://github.com/majamassarini/automate-knx-plugin.git
-          pip install git+https://github.com/majamassarini/automate-lifx-plugin.git
-          pip install git+https://github.com/majamassarini/automate-sonos-plugin.git
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-home.git@${{ env.AUTOMATE_HOME_BRANCH }}
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-knx-plugin.git@${{ env.AUTOMATE_KNX_BRANCH }}
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-lifx-plugin.git@${{ env.AUTOMATE_LIFX_BRANCH }}
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-sonos-plugin.git@${{ env.AUTOMATE_SONOS_BRANCH }}
 
       - name: black
         run: black --check .
@@ -60,10 +75,10 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install ".[dev]"
-          pip install git+https://github.com/majamassarini/automate-home.git@${{ env.AUTOMATE_HOME_BRANCH }}
-          pip install git+https://github.com/majamassarini/automate-knx-plugin.git
-          pip install git+https://github.com/majamassarini/automate-lifx-plugin.git
-          pip install git+https://github.com/majamassarini/automate-sonos-plugin.git
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-home.git@${{ env.AUTOMATE_HOME_BRANCH }}
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-knx-plugin.git@${{ env.AUTOMATE_KNX_BRANCH }}
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-lifx-plugin.git@${{ env.AUTOMATE_LIFX_BRANCH }}
+          pip install --force-reinstall git+https://github.com/majamassarini/automate-sonos-plugin.git@${{ env.AUTOMATE_SONOS_BRANCH }}
 
       - name: Run unit tests
         run: |
