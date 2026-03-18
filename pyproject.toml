@@ -86,6 +86,7 @@ per-file-ignores = [
 [tool.mypy]
 python_version = "3.9"
 ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
 
 [tool.coverage.run]
 command_line = "-m unittest discover"
