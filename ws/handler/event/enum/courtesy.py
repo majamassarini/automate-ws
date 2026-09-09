@@ -26,7 +26,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.courtesy.Event.On:
-            return "fas fa-walking"
+            return "ti ti-walk"
         elif e == home.event.courtesy.Event.Off:
-            return "fas fa-shoe-prints"
+            return "ti ti-user-off"
         return e

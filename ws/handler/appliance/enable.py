@@ -1,4 +1,4 @@
-import importlib
+from ws.handler.appliance.handler import _event_class
 
 from ws.handler.appliance import Handler as Parent
 
@@ -8,8 +8,7 @@ class Handler(Parent):
         module = data["module"]
         klass = data["klass"]
         enable = True if data["value"] == "true" else False
-        m = importlib.import_module(module)
-        k = getattr(m, klass)
+        k = _event_class(module, klass)
         for e in appliance.events:
             if type(e) == k:
                 if enable:

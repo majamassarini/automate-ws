@@ -7,8 +7,8 @@ class Handler(Parent):
     KLASS = home.appliance.sensor.motion.Appliance
     LABEL_SPOTTED = "Motion detected"
     LABEL_MISSED = "No motion"
-    ICON_SPOTTED = "fas fa-eye"
-    ICON_MISSED = "far fa-eye"
+    ICON_SPOTTED = "ti ti-run"
+    ICON_MISSED = "ti ti-eye-off"
 
     def get_label(self, appliance):
         if (

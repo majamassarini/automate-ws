@@ -26,7 +26,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.motion.Event.Spotted:
-            return "fas fa-eye"
+            return "ti ti-run"
         elif e == home.event.motion.Event.Missed:
-            return "far fa-eye"
+            return "ti ti-eye-off"
         return e

@@ -1,1 +1,1 @@
-<label id="{{ bean.id_label }}" for="{{ bean.id }}">{{ bean.value }}</label>
+<label id="{{ bean.id_label }}" for="{{ bean.id }}">{{ _(bean.value) if bean.value is string else bean.value }}</label>

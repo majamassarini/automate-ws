@@ -1,0 +1,46 @@
+{#
+  Shared event-state detail panel.
+
+  Accepts ONE of two variable shapes:
+
+  • panel_events   – list of (description, icon, is_highlighted) from history
+  • panel_beans    – list of event_bean objects from the details page
+
+  Exactly one should be set; the other can be omitted or left as [].
+#}
+{% if panel_events is defined and panel_events %}
+<div class="mt-2" style="display:grid;grid-template-columns:1.2rem 1fr;gap:0.15rem 0.4rem;align-items:center;">
+    {% for ev_desc, ev_icon, ev_on in panel_events %}
+        {% if ev_desc or ev_icon %}
+        <span>
+            {% if ev_icon is string and ev_icon %}
+            <span class="icon is-small {% if ev_on %}ws-enabled{% else %}ws-disabled{% endif %}">
+                <i class="{{ ev_icon }}"></i>
+            </span>
+            {% elif ev_icon and ev_icon.name is defined %}
+            <span class="tag is-light is-small">{{ ev_icon.name }}</span>
+            {% else %}&nbsp;{% endif %}
+        </span>
+        <span class="is-size-7 {% if not ev_on %}ws-disabled{% endif %}">{{ _(ev_desc) if ev_desc is string else ev_desc }}</span>
+        {% endif %}
+    {% endfor %}
+</div>
+{% elif panel_beans is defined and panel_beans %}
+<div class="mt-2" style="display:grid;grid-template-columns:1.2rem 1fr;gap:0.15rem 0.4rem;align-items:center;">
+    {% for eb in panel_beans %}
+        {% set ev_text = eb.event_str.split('.')[-1] if (eb.icon is string and eb.icon) else ((eb.value | string) if (eb.value is defined and eb.value is not none and (eb.value | string) not in ('', 'None')) else '') %}
+        {% if ev_text or eb.icon %}
+        <span>
+            {% if eb.icon is string and eb.icon %}
+            <span class="icon is-small {% if eb.enabled %}ws-enabled{% else %}ws-disabled{% endif %}">
+                <i class="{{ eb.icon }}"></i>
+            </span>
+            {% elif eb.icon and eb.icon.name is defined %}
+            <span class="tag is-light is-small">{{ eb.icon.name }}</span>
+            {% else %}&nbsp;{% endif %}
+        </span>
+        <span class="is-size-7 {% if not eb.enabled %}ws-disabled{% endif %}">{{ _(ev_text) if ev_text is string else ev_text }}</span>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

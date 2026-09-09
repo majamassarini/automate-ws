@@ -22,9 +22,12 @@ class Handler(Parent):
                 )
             )
         user = await self.get_user(request)
-        return {
-            "user": user,
-            "collection": collection,
-            "appliances": appliances,
-            "appliances_urls": appliances_urls,
-        }
+        return self.localize_context(
+            request,
+            {
+                "user": user,
+                "collection": collection,
+                "appliances": appliances,
+                "appliances_urls": appliances_urls,
+            },
+        )

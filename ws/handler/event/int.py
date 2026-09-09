@@ -29,10 +29,22 @@ class Handler(handler.Handler):
         return event
 
     def get_description(self, event):
-        return "{} {}".format(event, self.LABEL)
+        label = (self.LABEL or "").strip(" :")
+        if label and label.lower() != "value":
+            return "{}: {}".format(label, event)
+        return str(event)
+
+    def get_description_for_history(self, event):
+        label = (self._translator(self.LABEL) or "").strip(" :")
+        if label and label.lower() not in ("value", "valore"):
+            return "{}: {}".format(label, event)
+        return str(event)
 
     def get_description_for_index(self, event):
-        return ""
+        label = (self._translator(self.LABEL) or "").strip(" :")
+        if label and label.lower() not in ("value", "valore"):
+            return "{}: {}".format(label, event)
+        return str(event)
 
     def get_icon(self, event):
         return ""

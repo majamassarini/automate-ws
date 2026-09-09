@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}" data-theme="auto">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="/static/homino.css">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/homino.css?v=13">
 
     <title>{{ appliance.name }}</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/homino.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script src="https://unpkg.com/htmx-ext-ws@2.0.2/ws.js"></script>
+    <script type="text/javascript" src="/static/homino.js?v=2"></script>
 </head>
 
 <body>
@@ -20,49 +21,26 @@
 
         {% include "navbar.html" %}
 
-        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
-            <ul>
-                <li><a href="/collections">Collections</a></li>
-                <li><a href="{{ collection_url }}">{{ collection }}</a></li>
-                <li class="is-active"><a>{{ appliance.name }}</a></li>
-                <li><a href="{{ history_url }}">history</a> <a
-                        href="{{ details_url }}">details</a></li>
-            </ul>
-        </nav>
+        <div class="is-flex is-justify-content-space-between is-align-items-center mt-4">
+            <nav class="breadcrumb mb-0" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="/collections">{{ _("Collections") }}</a></li>
+                    <li><a href="{{ collection_url }}">{{ collection }}</a></li>
+                    <li class="is-active"><a>{{ appliance.name }}</a></li>
+                </ul>
+            </nav>
+            <div class="buttons are-small mb-0">
+                <button class="button is-light" title="{{ _('Copy appliance name') }}"
+                        onclick="navigator.clipboard.writeText('{{ appliance.name }}')">
+                    <span class="icon is-small"><i class="ti ti-copy"></i></span>
+                </button>
+                <a class="button is-light" href="{{ history_url }}">{{ _("history") }}</a>
+                <a class="button is-light" href="{{ details_url }}">{{ _("details") }}</a>
+            </div>
+        </div>
 
-        <h1 class="title">{{ appliance.name }} is <b id="{{ id }}">
-            <label class="ml-6" id="{{ bean.id_label }}">{{ bean.label }}</label>
-            <span class="icon has-text-dark ml-2">
-                <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
-            </span>
-        </b>
-        </h1>
-
-        <div class="tile is-ancestor is-vertical mt-6">
-            {% for bean in event_beans %}
-
-                {% if bean.label %}
-                    <form class="tile is-parent box"
-                            {% if not bean.displayed %} style="display: none;" {% endif %}
-                          action="{{ appliance_url }}" method="POST"
-                          id="form-{{ bean.id }}">
-                        <input type="hidden" name="module" value="{{ bean.module }}">
-                        <input type="hidden" name="klass" value="{{ bean.klass }}">
-                        {% include templates_dir + "/" + bean.template %}
-                        {% if user.edit %}
-                        <div class="tile is-child is-1">
-                            <a onclick='$("#modal-{{ bean.id_enabled }}").addClass("is-active")'>
-                            <span class="icon has-text-info">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            </a>
-                        </div>
-                        {% endif %}
-                    </form>
-                    {% include templates_dir + "/event/checkbox.html" %}
-                {% endif %}
-
-            {% endfor %}
+        <div hx-ext="ws" ws-connect="/ws">
+            {% include "appliance_partial.html" %}
         </div>
 
     </div>

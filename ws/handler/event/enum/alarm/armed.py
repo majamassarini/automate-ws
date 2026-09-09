@@ -26,7 +26,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.alarm.armed.Event.On:
-            return "fas fa-bell"
+            return "ti ti-bell-ringing"
         elif e == home.event.alarm.armed.Event.Off:
-            return "far fa-bell"
+            return "ti ti-bell-off"
         return e

@@ -1,8 +1,8 @@
 import unittest
-from ws.tests.testcase import MyHomeTestCase
+from ws.tests.testcase import AuthenticatedTestCase, MyHomeTestCase
 
 
-class ApplianceTestCase(MyHomeTestCase):
+class ApplianceGetTestCase(MyHomeTestCase):
     async def test_get(self):
         for collection in self.app.resources.appliances:
             for appliance in self.app.resources.appliances[collection]:
@@ -14,6 +14,8 @@ class ApplianceTestCase(MyHomeTestCase):
                 text = await request.text()
                 assert appliance.name in text
 
+
+class AppliancePostTestCase(AuthenticatedTestCase):
     async def test_post(self):
         request = await self.client.request(
             "POST",
@@ -28,6 +30,18 @@ class ApplianceTestCase(MyHomeTestCase):
         text = await request.text()
         assert "simple light" in text
         assert "Off" in text
+
+    async def test_post_unknown_event_returns_400(self):
+        request = await self.client.request(
+            "POST",
+            "/appliance/simple%20light",
+            data={
+                "module": "os",
+                "klass": "system",
+                "value": "x",
+            },
+        )
+        assert request.status == 400
 
 
 if __name__ == "__main__":

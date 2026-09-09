@@ -63,10 +63,6 @@ include = ["ws*"]
     "static/*.js",
     "static/*.png",
     "static/*.svg",
-    "static/block/*.js",
-    "static/generator/*.js",
-    "static/msg/js/*.js",
-    "static/msg/json/*.js",
 ]
 
 [tool.black]
@@ -74,9 +70,10 @@ line-length = 79
 
 [tool.flake8]
 ignore = ["F821"]
-extend-ignore = ["W503", "E501", "W505", "E704", "E721"]
+extend-ignore = ["W503", "E501", "W505", "E704", "E721", "E203"]
 max-line-length = 90
 max-doc-length = 120
+exclude = [".venv", "venv", "build"]
 per-file-ignores = [
     "__init__.py:F401,E402",
     "__main__.py:F401",

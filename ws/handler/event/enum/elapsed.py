@@ -8,8 +8,8 @@ class Handler(Parent):
     KLASS = home.event.elapsed.Event
     TEMPLATE = "event/enum.html"
     LABEL = "Elapsed"
-    ICON_ELAPSED = "fas fa-stop-circle"
-    ICON_NOT_ELAPSED = "far fa-stop-circle"
+    ICON_ELAPSED = "ti ti-hourglass-off"
+    ICON_NOT_ELAPSED = "ti ti-hourglass"
 
     def _get_str(self, e):
         if e == home.event.elapsed.Event.On:

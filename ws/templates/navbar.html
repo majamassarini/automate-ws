@@ -1,11 +1,11 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="/static/icon_128x128_blu.png" width="32" height="32">
+            <img src="/static/icon.svg" width="72" height="72">
         </a>
 
         <a role="button" id="burger-button"
-           onclick='$("#burger-button").toggleClass("is-active");$("#home-navbar").toggleClass("is-active")'
+           onclick='document.getElementById("burger-button").classList.toggle("is-active"); document.getElementById("home-navbar").classList.toggle("is-active")'
            class="navbar-burger" aria-label="menu" aria-expanded="false"
            data-target="home-navbar">
             <span aria-hidden="true"></span>
@@ -17,29 +17,30 @@
     <div id="home-navbar" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/index">
-            <span class="icon has-text-info">
-                <i class="fas fa-home"></i>
+            <span class="icon ws-enabled">
+                <i class="ti ti-home"></i>
             </span>
-                <span>Home</span>
+                <span>{{ _("Home") }}</span>
             </a>
             <a class="navbar-item" href="/collections">
-                <span class="icon has-text-info">
-                <i class="fas fa-list"></i>
+                <span class="icon ws-enabled">
+                <i class="ti ti-list"></i>
             </span>
-                <span>Collections</span>
+                <span>{{ _("Collections") }}</span>
             </a>
-            {% if user.configure %}
-            <!--a class="navbar-item" href="/editor">
-                <span class="icon has-text-info">
-                <i class="fas fa-edit"></i>
+            {% if user.configure and loki_base_url %}
+            {% if appliance is defined %}
+                {% set logs_href = make_loki_url(loki_base_url, appliance.name, loki_datasource_uid) %}
+            {% elif collection is defined %}
+                {% set logs_href = make_loki_url(loki_base_url, collection, loki_datasource_uid) %}
+            {% else %}
+                {% set logs_href = make_loki_url(loki_base_url, None, loki_datasource_uid) %}
+            {% endif %}
+            <a class="navbar-item" href="{{ logs_href }}" target="_blank" rel="noopener">
+                <span class="icon ws-enabled">
+                <i class="ti ti-clipboard"></i>
             </span>
-                <span>Configurator</span>
-            </a-->
-            <a class="navbar-item" href="/logs">
-                <span class="icon has-text-info">
-                <i class="far fa-clipboard"></i>
-            </span>
-                <span>Logs</span>
+                <span>{{ _("Logs") }}</span>
             </a>
             {% endif %}
         </div>
@@ -48,16 +49,16 @@
             <div class="navbar-item">
                 {% if user %}
                 <div class="buttons">
-                    <label class="label is-info mr-3">{{ user.id }}</label>
+                    <span class="is-size-6 has-text-info mr-3" style="align-self: center;">{{ user.id }}</span>
                     <form action="/logout" method="post">
-                        <input class="button is-light" type="submit" value="Logout">
+                        <input class="button is-light" type="submit" value="{{ _('Logout') }}">
                     </form>
                 </div>
                 {% else %}
                 <div class="buttons">
                     <a class="button is-light"
-                       onclick='$("#modal-login").toggleClass("is-active")'>
-                        Login
+                       onclick="toggleModal('modal-login')">
+                        {{ _("Login") }}
                     </a>
                 </div>
                 {% endif %}

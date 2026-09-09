@@ -25,6 +25,6 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.rain.in_the_past.Event.Off:
-            return "fas fa-tint-slash"
+            return "ti ti-droplet-off"
         else:
-            return "fas fa-tint"
+            return "ti ti-droplets"

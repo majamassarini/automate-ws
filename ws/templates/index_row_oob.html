@@ -1,0 +1,44 @@
+<a class="box mb-3" hx-swap-oob="afterbegin:#history-list" href="{{ appliance_url }}">
+    {% set ns = namespace(has_details=false) %}
+    {% for icon, event in event_details %}{% if (event is not none and event != "") or icon %}{% set ns.has_details = true %}{% endif %}{% endfor %}
+    <!-- Row 1: name · state · current-event icons (only when there are yellow tags) · timestamp -->
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 0.75rem;">
+        <span class="is-size-5 has-text-weight-semibold">{{ old_appliance.name }}</span>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem;">
+            <span class="is-size-7 has-text-grey">{{ timestamp }}</span>
+            <span class="tag is-info ml-2">
+                <span class="icon mr-1">
+                    <i class="{{ old_appliance_bean.icon }}"></i>
+                </span>
+                <label>{{ _(old_appliance_bean.label) }}</label>
+            </span>
+            {% if ns.has_details %}
+            {% for event in actual_events %}
+                {% if event.icon %}
+                    <span class="icon {% if event.enabled %}ws-enabled{% else %}ws-disabled{% endif %}">
+                        <i class="{{ event.icon }}"></i>
+                    </span>
+                {% else %}
+                    {% set val = event.value | string %}
+                    {% if val and val != "None" and (event.displayed or not event.enabled) %}
+                        <span class="tag is-light {% if not event.enabled %}ws-disabled{% endif %}">{{ val }}</span>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <!-- Row 2: tracked events that changed — shown as a distinct tag group -->
+    {% if ns.has_details %}
+    <div class="tags mt-2 mb-0" style="gap: 0.35rem;">
+        {% for icon, event in event_details %}
+            {% if (event is not none and event != "") or icon %}
+            <span class="tag is-warning is-light">
+                {% if icon %}<span class="icon is-small mr-1"><i class="{{ icon }}"></i></span>{% endif %}
+                {% if event is not none and event != "" %}{{ _(event) if event is string else event }}{% endif %}
+            </span>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</a>

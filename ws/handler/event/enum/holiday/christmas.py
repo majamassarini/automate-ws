@@ -26,11 +26,11 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.holiday.christmas.Event.Day:
-            return "fas fa-gifts"
+            return "ti ti-christmas-tree"
         elif e == home.event.holiday.christmas.Event.Eve:
-            return "fas fa-holly-berry"
+            return "ti ti-star"
         elif e == home.event.holiday.christmas.Event.Time:
-            return "far fa-calendar-check"
+            return "ti ti-calendar-check"
         elif e == home.event.holiday.christmas.Event.Over:
-            return "far fa-calendar-times"
+            return "ti ti-calendar-x"
         return e

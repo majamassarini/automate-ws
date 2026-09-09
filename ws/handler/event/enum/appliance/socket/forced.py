@@ -28,9 +28,9 @@ class Handler(forced.Handler):
 
     def get_icon(self, e):
         if e == home.appliance.socket.event.forced.event.Event.On:
-            return self.ICON_UP
+            return "ti ti-plug-connected"
         elif e == home.appliance.socket.event.forced.event.Event.Off:
-            return self.ICON_DOWN
+            return "ti ti-plug-x"
         elif e == home.appliance.socket.event.forced.event.Event.Not:
             return self.ICON_OK
         return e

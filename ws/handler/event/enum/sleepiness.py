@@ -20,9 +20,9 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.sleepiness.Event.Asleep:
-            return "fas fa-bed"
+            return "ti ti-zzz"
         elif e == home.event.sleepiness.Event.Awake:
-            return "fas fa-business-time"
+            return "ti ti-coffee"
         elif e == home.event.sleepiness.Event.Sleepy:
-            return "fas fa-couch"
+            return "ti ti-armchair"
         return e

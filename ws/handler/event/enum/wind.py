@@ -18,7 +18,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.wind.Event.Strong:
-            return "fas fa-wind"
+            return "ti ti-wind"
         elif e == home.event.wind.Event.Weak:
-            return "fas fa-window-minimize"
+            return "ti ti-wind-off"
         return e

@@ -7,8 +7,8 @@ class Handler(Parent):
     KLASS = home.appliance.light.zone.Appliance
     LABEL_ALARMED_ON = "Alarmed On"
     LABEL_ALARMED_OFF = "Alarmed Off"
-    ICON_ALARMED_ON = "fas fa-bell"
-    ICON_ALARMED_OFF = "fa fa-bell"
+    ICON_ALARMED_ON = "ti ti-bell-ringing"
+    ICON_ALARMED_OFF = "ti ti-bell"
 
     def get_label(self, appliance):
         if (

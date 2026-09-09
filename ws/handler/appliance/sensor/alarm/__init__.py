@@ -8,9 +8,9 @@ class Handler(Parent):
     LABEL_UNARMED = "Unarmed"
     LABEL_ARMED = "Armed"
     LABEL_TRIGGERED = "Triggered"
-    ICON_UNARMED = "far fa-bell"
-    ICON_ARMED = "fas fa-bell"
-    ICON_TRIGGERED = "fas fa-exclamation"
+    ICON_UNARMED = "ti ti-bell-off"
+    ICON_ARMED = "ti ti-bell"
+    ICON_TRIGGERED = "ti ti-bell-ringing"
 
     def get_label(self, appliance):
         if (

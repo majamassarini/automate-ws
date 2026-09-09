@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}" data-theme="auto">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-
-    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/homino.css?v=13">
 
     <title>Collections of Appliances</title>
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script type="text/javascript" src="/static/homino.js?v=2"></script>
 </head>
 
 <body>
@@ -17,36 +20,33 @@
 
         {% include "navbar.html" %}
 
-        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+        <nav class="breadcrumb mt-4" aria-label="breadcrumbs">
             <ul>
-                <li class="is-active"><a>Collections</a></li>
+                <li class="is-active"><a>{{ _("Collections") }}</a></li>
             </ul>
         </nav>
 
-        <h1 class="title">Collections of Appliances</h1>
+        <h1 class="title is-5 mb-4">{{ _("Collections") }}</h1>
 
-        <div class="tile is-ancestor mt-6">
-        <div class="tile is-vertical is-parent">
-            {% for collection, appliance_beans in collections %}
-                <div class="tile box">
-                    <div class="tile is-child is-4">
-                        <a class="is-size-5" href="{{ collections_urls[collection] }}">{{ collection }}</a>
-                    </div>
-                    <div class="tile is-child">
+        {% for collection, appliance_beans in collections %}
+            <a class="box mb-3" href="{{ collections_urls[collection] }}">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem 0.75rem;">
+                    <span class="is-size-5 has-text-weight-semibold">{{ collection }}</span>
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem;">
                         {% for bean in appliance_beans %}
                             {% if bean.icon %}
-                            <span class="icon has-text-dark">
+                            <span class="icon has-text-grey-dark">
                                 <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
                             </span>
                             {% else %}
-                                <span class="mr-2" id="{{ bean.id_label }}">{{ bean.label }}</span>
+                                <span class="tag is-light" id="{{ bean.id_label }}">{{ _(bean.label) }}</span>
                             {% endif %}
                         {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
-            </div>
-        </div>
+            </a>
+        {% endfor %}
+
     </div>
 </section>
 </body>

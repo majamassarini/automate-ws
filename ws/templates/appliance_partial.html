@@ -1,0 +1,82 @@
+<div id="appliance-section-{{ id }}" {% if oob %}hx-swap-oob="true"{% endif %}>
+
+    <div class="level is-mobile mb-5 mt-4">
+        <div class="level-left">
+            <div class="level-item">
+                <p class="title is-5">{{ appliance.name }}</p>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <span class="tag is-info is-medium" id="{{ id }}">
+                    <span class="icon mr-1">
+                        <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+                    </span>
+                    <label id="{{ bean.id_label }}">{{ _(bean.label) }}</label>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        {% for bean in event_beans %}
+
+            {% if bean.label %}
+                <form class="box mb-3"
+                        {% if not bean.displayed %} style="display: none;" {% endif %}
+                      id="form-{{ bean.id }}"
+                      hx-post="{{ appliance_url }}"
+                      hx-trigger="change from:input, change from:select"
+                      hx-target="#appliance-section-{{ id }}"
+                      hx-swap="outerHTML">
+                    <div class="columns is-vcentered">
+                        <div class="column"
+                             {% if not bean.enabled %}style="opacity: 0.4; pointer-events: none;"{% endif %}>
+                            <div class="columns is-vcentered is-multiline">
+                                <input type="hidden" name="module" value="{{ bean.module }}">
+                                <input type="hidden" name="klass" value="{{ bean.klass }}">
+                                {% include templates_dir + "/" + bean.template %}
+                            </div>
+                        </div>
+                        {% if user.edit %}
+                        <div class="column is-narrow is-flex is-align-items-center">
+                            <span class="icon has-text-grey-dark mr-2" style="cursor: pointer;"
+                                  hx-post="{{ enable_event_url }}"
+                                  hx-trigger="click"
+                                  hx-vals='{"module": "{{ bean.module }}", "klass": "{{ bean.klass }}", "value": "{% if bean.enabled %}false{% else %}true{% endif %}"}'
+                                  hx-target="#appliance-section-{{ id }}"
+                                  hx-swap="outerHTML">
+                                <i class="ti {% if bean.enabled %}ti-toggle-right{% else %}ti-toggle-left{% endif %}"></i>
+                            </span>
+                            <span class="icon has-text-grey-dark" style="cursor: pointer;"
+                                  onclick="toggleModal('modal-send-{{ bean.id }}')"
+                                  hx-get="{{ send_modal_url }}?module={{ bean.module }}&klass={{ bean.klass }}"
+                                  hx-trigger="click"
+                                  hx-target="#modal-send-body-{{ bean.id }}"
+                                  hx-swap="innerHTML">
+                                <i class="ti ti-send"></i>
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </form>
+                {% if user.edit %}
+                <div class="modal" id="modal-send-{{ bean.id }}">
+                    <div class="modal-background" onclick="toggleModal('modal-send-{{ bean.id }}')"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">{{ _("Send") }} <em>{{ bean.label }}</em></p>
+                            <button onclick="toggleModal('modal-send-{{ bean.id }}')"
+                                    class="delete" aria-label="close"></button>
+                        </header>
+                        <div id="modal-send-body-{{ bean.id }}">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+    </div>
+
+</div>

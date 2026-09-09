@@ -20,7 +20,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.toggle.Event.On:
-            return "fas fa-toggle-on"
+            return "ti ti-toggle-right"
         elif e == home.event.toggle.Event.Off:
-            return "fas fa-toggle-off"
+            return "ti ti-toggle-left"
         return e

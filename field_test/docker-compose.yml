@@ -1,0 +1,10 @@
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: field_test/Dockerfile
+    ports:
+      - "8080:8080"
+    # Mount ws/ so template/static changes are live without rebuilding
+    volumes:
+      - ../ws:/app/ws:ro

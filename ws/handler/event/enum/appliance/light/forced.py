@@ -30,9 +30,9 @@ class Handler(forced.Handler):
 
     def get_icon(self, e):
         if e == home.appliance.light.event.forced.event.Event.On:
-            return self.ICON_UP
+            return "ti ti-bulb"
         elif e == home.appliance.light.event.forced.event.Event.Off:
-            return self.ICON_DOWN
+            return "ti ti-bulb-off"
         elif e == home.appliance.light.event.forced.event.Event.Not:
             return self.ICON_OK
         return e
