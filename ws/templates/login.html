@@ -2,17 +2,21 @@
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-            <p class="modal-card-title">Login</p>
-            <button onclick='$("#modal-login").removeClass("is-active")'
+            <p class="modal-card-title">{{ _("Login") }}</p>
+            <button onclick="toggleModal('modal-login')"
                     class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
             <form action="/login" method="post">
-                <label for="username">Username</label>
+                <label for="username">{{ _("Username") }}</label>
                 <input class="input is-info" type="text" name="username" id="username" value="">
-                <label for="password">Password</label>
+                <label for="password">{{ _("Password") }}</label>
                 <input class="input is-info" type="password" name="password" id="password" value="">
-                <input class="button is-info mt-6" type="submit" value="Login">
+                <label class="checkbox mt-4" style="display: block;">
+                    <input type="checkbox" name="remember_me" value="1">
+                    {{ _("Remember me for 30 days") }}
+                </label>
+                <input class="button is-info mt-4" type="submit" value="{{ _('Login') }}">
             </form>
         </section>
     </div>

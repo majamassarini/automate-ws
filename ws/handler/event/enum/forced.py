@@ -10,6 +10,6 @@ class Handler(Parent):
     OPENED = "opened"
     CLOSED = "closed"
 
-    ICON_UP = "far fa-hand-point-up"
-    ICON_DOWN = "far fa-hand-point-down"
-    ICON_OK = "far fa-thumbs-up"
+    ICON_UP = "ti ti-arrow-big-up"
+    ICON_DOWN = "ti ti-arrow-big-down"
+    ICON_OK = "ti ti-circle-check"

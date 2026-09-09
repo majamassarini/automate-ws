@@ -20,9 +20,9 @@ class Handler(definition.Handler):
 
     def get_icon(self, e):
         if e == home.event.holiday.san_silvester.Event.Day:
-            return "fas fa-hot-tub"
+            return "ti ti-balloons"
         elif e == home.event.holiday.san_silvester.Event.Eve:
-            return "fas fa-glass-cheers"
+            return "ti ti-glass-champagne"
         elif e == home.event.holiday.san_silvester.Event.Over:
-            return "far fa-calendar-times"
+            return "ti ti-calendar-x"
         return e

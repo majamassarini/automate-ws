@@ -7,8 +7,8 @@ class Handler(Parent):
     KLASS = home.appliance.sensor.rainmeter.Appliance
     LABEL_NO = "No rain"
     LABEL_GENTLE = "Gentle raining"
-    ICON_NO = "fas fa-tint-slash"
-    ICON_GENTLE = "fas fa-tint"
+    ICON_NO = "ti ti-droplet-off"
+    ICON_GENTLE = "ti ti-droplets"
 
     def get_label(self, appliance):
         if (

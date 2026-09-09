@@ -7,10 +7,10 @@ class Handler(Parent):
     KLASS = home.appliance.thermostat.presence.Appliance
     LABEL_KEEP = "Keeping"
     LABEL_FORCED_KEEP = "Forced keeping"
-    ICON_ON = "fas fa-burn"
-    ICON_OFF = "fas fa-power-off"
-    ICON_KEEP = "fas fa-water"
-    ICON_FORCED_KEEP = "far fa-hand-point-right"
+    ICON_ON = "ti ti-flame"
+    ICON_OFF = "ti ti-power"
+    ICON_KEEP = "ti ti-temperature"
+    ICON_FORCED_KEEP = "ti ti-hand-finger"
 
     def get_label(self, appliance):
         if (

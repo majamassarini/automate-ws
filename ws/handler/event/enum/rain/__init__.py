@@ -32,9 +32,9 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.rain.Event.No:
-            return "fas fa-tint-slash"
+            return "ti ti-droplet-off"
         elif e == home.event.rain.Event.Gentle:
-            return "fas fa-tint"
+            return "ti ti-droplets"
         return e
 
 

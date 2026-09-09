@@ -1,0 +1,67 @@
+{% for (timestamp, old_appliance, old_appliance_bean, all_event_details, duration, causal_links) in history %}
+    <div class="box mb-3">
+        <div class="columns is-vcentered is-mobile is-multiline">
+            <div class="column is-full-mobile is-narrow-tablet">
+                <p class="is-size-7 has-text-grey">{{ timestamp }}</p>
+                {% if duration %}<p class="is-size-7 has-text-grey-light">{{ duration }}</p>{% endif %}
+            </div>
+            <div class="column is-half-mobile is-narrow-tablet">
+                <span class="tag is-light">
+                    <span class="icon mr-1">
+                        <i id="{{ old_appliance_bean.id_icon }}" class="{{ old_appliance_bean.icon }}"></i>
+                    </span>
+                    <label id="{{ old_appliance_bean.id_label }}">{{ _(old_appliance_bean.label) }}</label>
+                </span>
+            </div>
+            <div class="column has-text-right">
+                <!-- Only the events that changed in this transition -->
+                <span class="is-size-7 is-flex is-flex-wrap-wrap is-justify-content-flex-end" style="gap: 0 0.75rem;">
+                    {% for event, icon, changed in all_event_details %}
+                        {% if changed and (event or icon) %}
+                        <span class="has-text-weight-semibold">
+                            {% if icon is string and icon %}
+                            <span class="icon is-small"><i class="{{ icon }}"></i></span>
+                            {% elif icon %}
+                            <span class="tag is-light is-small mr-1">{{ icon.name }}</span>
+                            {% endif %}
+                            {% if event %}<span>{{ event }}</span>{% endif %}
+                        </span>
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        <!-- Full state panel (all events at this point in time) -->
+        {% if all_event_details %}
+        <details class="mt-2">
+            <summary class="has-text-grey-light" style="cursor:pointer;list-style:none;">
+                <span class="icon is-small"><i class="ti ti-chevron-right" style="transition:transform 0.15s;"></i></span>
+            </summary>
+            {% with panel_events = all_event_details %}{% include "event_state_panel.html" %}{% endwith %}
+        </details>
+        {% endif %}
+        {% if causal_links %}
+        <div class="columns">
+            <div class="column">
+                <p class="is-size-7 has-text-grey">
+                    {{ _("Possible triggers") }}:
+                    {% for link in causal_links %}
+                    <span class="tag is-light is-size-7 mr-1" title="{{ link.kind }}">{{ link.name }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<div id="load-more-container">
+    {% if has_more %}
+    <button class="button is-light is-fullwidth mb-3"
+            hx-get="{{ history_url }}?filter={{ active_filter }}&from_date={{ custom_from }}&to_date={{ custom_to }}&offset={{ next_offset }}&limit={{ limit }}"
+            hx-target="#load-more-container"
+            hx-swap="outerHTML">
+        {{ _("Load more") }}
+    </button>
+    {% endif %}
+</div>

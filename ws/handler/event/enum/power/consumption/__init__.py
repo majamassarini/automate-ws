@@ -20,11 +20,11 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.power.consumption.Event.No:
-            return "fas fa-battery-full"
+            return "ti ti-bolt-off"
         elif e == home.event.power.consumption.Event.Low:
-            return "fas fa-battery-three-quarters"
+            return "ti ti-bolt"
         elif e == home.event.power.consumption.Event.High:
-            return "fas fa-battery-empty"
+            return "ti ti-bolt"
         return e
 
 

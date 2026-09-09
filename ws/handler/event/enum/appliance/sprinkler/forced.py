@@ -9,9 +9,9 @@ class Handler(forced.Handler):
     PARTIALLY_ON = "Partially On"
     FORCED_PARTIALLY_ON = "Forced Partially On"
     TEMPLATE = "event/forced_enum.html"
-    ICON_FORCED_ON = "fas fa-play-circle"
-    ICON_OFF = "far fa-play-circle"
-    ICON_PARTIALLY_ON = forced.Handler.ICON_CIRCADIAN_RHYTHM
+    ICON_FORCED_ON = "ti ti-droplet-filled"
+    ICON_OFF = "ti ti-droplet-off"
+    ICON_PARTIALLY_ON = "ti ti-droplet-half"
 
     def _get_str(self, e):
         if e == home.appliance.sprinkler.event.forced.event.Event.On:
@@ -41,9 +41,9 @@ class Handler(forced.Handler):
 
     def get_icon(self, e):
         if e == home.appliance.sprinkler.event.forced.event.Event.On:
-            return self.ICON_UP
+            return self.ICON_FORCED_ON
         elif e == home.appliance.sprinkler.event.forced.event.Event.Off:
-            return self.ICON_DOWN
+            return self.ICON_OFF
         elif (
             e == home.appliance.sprinkler.event.forced.event.Event.PartiallyOn
         ):

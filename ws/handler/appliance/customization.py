@@ -81,7 +81,7 @@ class Handler(Parent, metaclass=Registry):
         return appliance.state.compute()
 
     def get_icon(self, appliance):
-        return "fas fa-times-circle"
+        return "ti ti-circle-x"
 
     def is_displayed(self, appliance, event):
         return True

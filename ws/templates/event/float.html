@@ -1,11 +1,8 @@
-{% include templates_dir + "/event/label.html" %}
-<div class="tile is-child pr-6">
+<div class="column">
     {% if user.edit %}
-    <input class="input is-info" type="number" name="value" id="{{ bean.id }}" value="{{ bean.value }}" {% if not bean.enabled %} disabled {% endif %}
-           onchange="ajaxPostValue('{{ appliance_uri }}', '{{ bean.module }}', '{{ bean.klass }}', $('#{{ bean.id }}').val())">
+    {% include templates_dir + "/event/label.html" %}
+    <input class="input" type="number" name="value" id="{{ bean.id }}" value="{{ bean.value }}" {% if not bean.enabled %} disabled {% endif %}>
     {% else %}
-    {% include templates_dir + "/event/value_label.html" %}
+    <span class="is-size-7">{% if bean.label %}<span class="has-text-grey mr-1">{{ _(bean.label) }}</span>{% endif %}<span id="{{ bean.id_label }}">{{ bean.value }}</span></span>
     {% endif %}
 </div>
-{% include templates_dir + "/event/checkbox.html" %}
-

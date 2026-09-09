@@ -20,9 +20,9 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.clima.command.Event.On:
-            return "fas fa-toggle-on"
+            return "ti ti-toggle-right"
         elif e == home.event.clima.command.Event.Off:
-            return "fas fa-toggle-off"
+            return "ti ti-toggle-left"
         elif e == home.event.clima.command.Event.Keep:
-            return "fas fa-circle"
+            return "ti ti-circle-dotted"
         return e

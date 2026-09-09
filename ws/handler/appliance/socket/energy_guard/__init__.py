@@ -10,11 +10,11 @@ class Handler(Parent):
     LABEL_DETACHABLE = "Detachable"
     LABEL_FORCED_ON = "Forced On"
     LABEL_FORCED_OFF = "Forced Off"
-    ICON_ON = "fas fa-plug"
-    ICON_OFF = "fas fa-power-off"
-    ICON_FORCED_ON = "far fa-hand-point-up"
-    ICON_FORCED_OFF = "far fa-hand-point-down"
-    ICON_DETACHABLE = "fas exclamation-triangle"
+    ICON_ON = "ti ti-plug-connected"
+    ICON_OFF = "ti ti-plug-x"
+    ICON_FORCED_ON = "ti ti-arrow-big-up"
+    ICON_FORCED_OFF = "ti ti-arrow-big-down"
+    ICON_DETACHABLE = "ti ti-alert-triangle"
 
     def get_label(self, appliance):
         if (

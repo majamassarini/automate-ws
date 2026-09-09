@@ -19,3 +19,6 @@ class Handler(Parent):
 
     def get_icon(self, event):
         return None
+
+    def get_description_for_index(self, event):
+        return str(event)

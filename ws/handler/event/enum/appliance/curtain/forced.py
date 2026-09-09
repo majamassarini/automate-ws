@@ -30,9 +30,9 @@ class Handler(forced.Handler):
 
     def get_icon(self, e):
         if e == home.appliance.curtain.event.forced.event.Event.Opened:
-            return self.ICON_UP
+            return "ti ti-arrow-bar-up"
         elif e == home.appliance.curtain.event.forced.event.Event.Closed:
-            return self.ICON_DOWN
+            return "ti ti-arrow-bar-down"
         elif e == home.appliance.curtain.event.forced.event.Event.Not:
             return self.ICON_OK
         return e

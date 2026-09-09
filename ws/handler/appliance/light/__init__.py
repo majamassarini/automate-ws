@@ -9,10 +9,10 @@ class Handler(Parent):
     LABEL_FORCED_ON = "Forced On"
     LABEL_OFF = "Off"
     LABEL_FORCED_OFF = "Forced Off"
-    ICON_ON = "fas fa-lightbulb"
-    ICON_OFF = "far fa-lightbulb"
-    ICON_FORCED_ON = "far fa-hand-point-up"
-    ICON_FORCED_OFF = "far fa-hand-point-down"
+    ICON_ON = "ti ti-bulb"
+    ICON_OFF = "ti ti-bulb-off"
+    ICON_FORCED_ON = "ti ti-arrow-big-up"
+    ICON_FORCED_OFF = "ti ti-arrow-big-down"
 
     def get_label(self, appliance):
         if appliance.state.VALUE == home.appliance.light.state.on.State.VALUE:
