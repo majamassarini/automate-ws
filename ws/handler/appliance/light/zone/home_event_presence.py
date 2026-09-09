@@ -27,7 +27,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.presence.Event.On:
-            return "fas fa-sign-in-alt"
+            return "ti ti-login"
         elif e == home.event.presence.Event.Off:
-            return "fas fa-sign-out-alt"
+            return "ti ti-logout"
         return e

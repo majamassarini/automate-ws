@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="/static/homino.css">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="/static/homino.css?v=13">
 
     <title>{{ appliance.name }}</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/homino.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script src="https://unpkg.com/htmx-ext-ws@2.0.2/ws.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+    <script type="text/javascript" src="/static/homino.js?v=2"></script>
 </head>
 
 <body>
@@ -30,33 +31,43 @@
             </ul>
         </nav>
 
-        <h1 class="title">{{ appliance.name }} is <b id="{{ id }}">
-            <span class="icon has-text-dark mr-2 ml-6">
-                <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
-            </span>
-            <label id="{{ bean.id_label }}">{{ bean.label }}</label>
-        </b>
-        </h1>
+        <div hx-ext="ws" ws-connect="/ws">
+            <div id="appliance-section-{{ id }}" {% if oob %}hx-swap-oob="true"{% endif %}>
 
-        <div class="tile is-ancestor is-vertical mt-6">
-            {% for bean in event_beans %}
-                {% if bean.module == "home.appliance.light.event.brightness" or
-                        bean.module == "home.appliance.light.event.show.starting_brightness" or
-                        bean.module == "home.appliance.light.event.show.cycles" %}
-                    <div class="tile is-parent">
-                {% endif %}
-                    <form class="tile is-parent box" action="{{ appliance_url }}" method="POST"
-                          id="form-{{ loop.index }}">
-                    <input type="hidden" name="module" value="{{ bean.module }}">
-                    <input type="hidden" name="klass" value="{{ bean.klass }}">
-                    {% include templates_dir + "/" + bean.template %}
-                    </form>
-                {% if bean.module == "home.appliance.light.event.lux_balancing.brightness" or
-                        bean.module == "home.appliance.light.event.show.ending_brightness" or
-                        bean.module == "home.appliance.light.event.show.period" %}
-                    </div>
-                {% endif %}
-            {% endfor %}
+                <h1 class="title">{{ appliance.name }} is <b id="{{ id }}">
+                    <span class="icon mr-2 ml-6">
+                        <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+                    </span>
+                    <label id="{{ bean.id_label }}">{{ bean.label }}</label>
+                </b>
+                </h1>
+
+                <div class="tile is-ancestor is-vertical mt-6">
+                    {% for bean in event_beans %}
+                        {% if bean.module == "home.appliance.light.event.brightness" or
+                                bean.module == "home.appliance.light.event.show.starting_brightness" or
+                                bean.module == "home.appliance.light.event.show.cycles" %}
+                            <div class="tile is-parent">
+                        {% endif %}
+                            <form class="tile is-parent box"
+                                  id="form-{{ loop.index }}"
+                                  hx-post="{{ appliance_url }}"
+                                  hx-trigger="change from:input, change from:select"
+                                  hx-target="#appliance-section-{{ id }}"
+                                  hx-swap="outerHTML">
+                            <input type="hidden" name="module" value="{{ bean.module }}">
+                            <input type="hidden" name="klass" value="{{ bean.klass }}">
+                            {% include templates_dir + "/" + bean.template %}
+                            </form>
+                        {% if bean.module == "home.appliance.light.event.lux_balancing.brightness" or
+                                bean.module == "home.appliance.light.event.show.ending_brightness" or
+                                bean.module == "home.appliance.light.event.show.period" %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
         </div>
 
     </div>

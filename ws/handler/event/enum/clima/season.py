@@ -22,11 +22,11 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.clima.season.Event.Winter:
-            return "fas fa-snowflake"
+            return "ti ti-snowflake"
         elif e == home.event.clima.season.Event.Summer:
-            return "fas fa-umbrella-beach"
+            return "ti ti-sun-wind"
         elif e == home.event.clima.season.Event.Spring:
-            return "fas fa-seeding"
+            return "ti ti-plant"
         elif e == home.event.clima.season.Event.Fall:
-            return "fas fa-leaf"
+            return "ti ti-leaf"
         return e

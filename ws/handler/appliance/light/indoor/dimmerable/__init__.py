@@ -8,9 +8,9 @@ class Handler(Parent):
     LABEL_FORCED_SHOW = "In a show"
     LABEL_FORCED_CIRCADIAN_RHYTHM = "Following circadian rhythm"
     LABEL_FORCED_LUX_BALANCING = "Lux balancing"
-    ICON_FORCED_SHOW = "fas fa-magic"
-    ICON_FORCED_CIRCADIAN_RHYTHM = "fas fa-sync"
-    ICON_FORCED_LUX_BALANCING = "fas fa-adjust"
+    ICON_FORCED_SHOW = "ti ti-sparkles"
+    ICON_FORCED_CIRCADIAN_RHYTHM = "ti ti-rotate-clockwise"
+    ICON_FORCED_LUX_BALANCING = "ti ti-brightness-auto"
 
     def get_label(self, appliance):
         if (

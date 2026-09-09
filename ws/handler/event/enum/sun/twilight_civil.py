@@ -18,7 +18,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.sun.twilight.civil.Event.Sunrise:
-            return "fas fa-globe-europe"
+            return "ti ti-sun-low"
         elif e == home.event.sun.twilight.civil.Event.Sunset:
-            return "fas fa-globe"
+            return "ti ti-moon-stars"
         return e

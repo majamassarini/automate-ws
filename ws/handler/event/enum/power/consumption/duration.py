@@ -18,7 +18,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.power.consumption.duration.Event.Short:
-            return "fas fa-hourglass-start"
+            return "ti ti-hourglass-low"
         elif e == home.event.power.consumption.duration.Event.Long:
-            return "fas fa-hourglass-end"
+            return "ti ti-hourglass-high"
         return e

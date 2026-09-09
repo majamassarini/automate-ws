@@ -6,7 +6,7 @@ class Handler(Parent):
 
     KLASS = home.appliance.light.presence.Appliance
     LABEL_ALARMED = "Alarmed"
-    ICON_ALARMED = "fas fa-bell"
+    ICON_ALARMED = "ti ti-bell-ringing"
 
     def get_label(self, appliance):
         if (

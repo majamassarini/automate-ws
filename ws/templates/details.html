@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}" data-theme="auto">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/homino.css?v=13">
 
-    <title>{{ appliance.name }} details</title>
+    <title>{{ appliance.name }} {{ _("details") }}</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/homino.js"></script>
+    <script type="text/javascript" src="/static/homino.js?v=2"></script>
 </head>
 
 <body>
@@ -19,56 +19,245 @@
 
         {% include "navbar.html" %}
 
-        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+        <nav class="breadcrumb mt-4" aria-label="breadcrumbs">
             <ul>
-                <li><a href="/collections">Collections</a></li>
+                <li><a href="/collections">{{ _("Collections") }}</a></li>
                 <li><a href="{{ collection_url }}">{{ collection }}</a></li>
                 <li><a href="{{ appliance_url }}">{{ appliance.name }}</a></li>
-                <li class="is-active"><a>details</a></li>
+                <li class="is-active"><a>{{ _("details") }}</a></li>
             </ul>
         </nav>
 
-        <h1 class="title">{{ appliance.name }}</h1>
-
+        <details class="box mb-4">
+            <summary style="cursor:pointer;list-style:none;">
+                <div class="is-flex is-flex-wrap-wrap is-align-items-center" style="gap: 0.5rem;">
+                    <span class="is-flex is-align-items-center" style="flex: 1; gap: 0.5rem;">
+                        <span class="is-size-6 has-text-weight-medium">{{ appliance.name }}</span>
+                        <span class="tag is-light" id="{{ bean.id }}">
+                            <span class="icon mr-1">
+                                <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
+                            </span>
+                            <label id="{{ bean.id_label }}">{{ _(bean.label) }}</label>
+                        </span>
+                    </span>
+                    <span class="is-size-7 is-flex is-flex-wrap-wrap is-justify-content-flex-end" style="gap: 0 0.75rem;">
+                        {% for eb in event_beans %}
+                        <span class="event-filter-icon {% if eb.enabled %}ws-enabled{% else %}ws-disabled{% endif %}"
+                              data-event-str="{{ eb.event_str | e }}" style="cursor: pointer;" onclick="event.stopPropagation(); selectEventFilter(this.dataset.eventStr)">
+                            {% if eb.icon is string and eb.icon %}
+                            <span class="icon is-small"><i class="{{ eb.icon }}"></i></span>
+                            {% elif eb.icon and eb.icon.name is defined %}
+                            <span class="tag is-light is-small mr-1">{{ eb.icon.name }}</span>
+                            {% endif %}
+                            {% if eb.value is defined and eb.value is not none and eb.value %}<span>{{ _(eb.value) if eb.value is string else eb.value }}</span>{% endif %}
+                        </span>
+                        {% endfor %}
+                    </span>
+                </div>
+            </summary>
+            {% with panel_events = event_panel_items %}{% include "event_state_panel.html" %}{% endwith %}
+        </details>
 
         {% if user.configure %}
-        <div class="tile is-ancestor is-vertical mt-6">
-            <div class="tile is-child box">
-                <p>It belongs to the following <b>Performers</b></p>
-                <div class="content">
-                    <ul>
-                        {% for performer in performers %}
-                            <li>{{ performer }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        <div class="mt-4">
 
-            <div class="tile is-child box">
-                <p>It belongs to the following <b>Group of Performers</b></p>
-                <div class="content">
-                    <ul>
-                        {% for group in group_of_performers %}
-                            <li>{{ group }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+            {% if command_performers or scheduled_triggers %}
+            <p class="has-text-weight-bold mb-3">{{ _("Outputs") }} <span class="is-size-7 has-text-grey has-text-weight-normal">— {{ _("commands sent to physical devices") }}</span></p>
 
-            <div class="tile is-child box">
-                <p>It will be modified by the following <b>Scheduler Triggers</b></p>
-                <div class="content">
-                    <ul>
-                        {% for scheduler in scheduler_triggers %}
-                            <li>{{ scheduler }}</li>
-                        {% endfor %}
-                    </ul>
+            {% if command_performers %}
+            <p class="has-text-weight-semibold mb-2 ml-2">{{ _("Performers") }}</p>
+            {% for performer, p_groups in command_performers %}
+            <details class="box mb-3" style="cursor: pointer;">
+                <summary class="has-text-weight-semibold" style="list-style: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="icon is-small has-text-grey">
+                        <i class="ti ti-chevron-right" style="transition: transform 0.15s;"></i>
+                    </span>
+                    {{ performer.name }}
+                    {% for g in p_groups %}
+                    <span class="tag is-light is-size-7">{{ g }}</span>
+                    {% endfor %}
+                </summary>
+                <div class="mt-3">
+                    {% for command in performer.commands %}
+                    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.5rem; margin-bottom: 0.25rem;">
+                        <span class="tag is-light is-size-7">{{ (command.label.split(': ', 1)[1]) if ': ' in command.label else command.label }}</span>
+                        {% if command.addresses %}
+                        <div class="is-size-7 has-text-grey-light" style="flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 0.1rem 0.3rem; padding-left: 0.25rem;">
+                            {% for addr in command.addresses %}<span style="overflow-wrap: anywhere;">{{ addr }}</span>{% if not loop.last %}<span>·</span>{% endif %}{% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
-            </div>
+            </details>
+            {% endfor %}
+            {% endif %}
+
+            {% if scheduled_triggers %}
+            <p class="has-text-weight-semibold mb-2 ml-2">{{ _("Triggers") }}</p>
+            {% for trigger in scheduled_triggers %}
+            <details class="box mb-3 event-filter-item" style="cursor: pointer;"
+                     data-events='{{ trigger.events | tojson }}'>
+                <summary class="has-text-weight-semibold" style="list-style: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="icon is-small has-text-grey">
+                        <i class="ti ti-chevron-right" style="transition: transform 0.15s;"></i>
+                    </span>
+                    {{ trigger.name }}
+                    <span class="tag is-light is-size-7 ml-2">{{ _(trigger.kind) }}</span>
+                </summary>
+                <div class="mt-3">
+                    {% if trigger.performers %}
+                    <p class="is-size-7 has-text-grey mb-1">{{ _("Notifies performer") }}</p>
+                    <div class="tags mb-2">
+                        {% for p in trigger.performers %}
+                        <span class="tag is-light is-size-7">{{ p }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if trigger.event_displays %}
+                    <p class="is-size-7 has-text-grey mb-1">{{ _("Sends") }}</p>
+                    <div class="tags">
+                        {% for e in trigger.event_displays %}
+                        <span class="tag is-light is-size-7">{{ e }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if trigger.details %}
+                    <p class="is-size-7 has-text-grey mb-1 mt-2">{{ _("Details") }}</p>
+                    <div>
+                        {% for detail in trigger.details %}
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.15rem;">
+                            <span class="is-size-7 has-text-grey" style="min-width: 6rem;">{{ _(detail.label) }}</span>
+                            <span class="is-size-7">{{ detail.value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </details>
+            {% endfor %}
+            {% endif %}
+
+            {% endif %}
+
+            {% if trigger_performers or reactive_triggers %}
+            <p class="has-text-weight-bold mb-3 mt-4">{{ _("Inputs") }} <span class="is-size-7 has-text-grey has-text-weight-normal">— {{ _("signals received from sensors & events") }}</span></p>
+
+            {% if trigger_performers %}
+            <p class="has-text-weight-semibold mb-2 ml-2">{{ _("Performers") }}</p>
+            {% for performer, p_groups, performer_events, trigger_event_strs in trigger_performers %}
+            <details class="box mb-3 event-filter-item" style="cursor: pointer;"
+                     data-events='{{ performer_events | tojson }}'>
+                <summary class="has-text-weight-semibold" style="list-style: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="icon is-small has-text-grey">
+                        <i class="ti ti-chevron-right" style="transition: transform 0.15s;"></i>
+                    </span>
+                    {{ performer.name }}
+                    {% for g in p_groups %}
+                    <span class="tag is-light is-size-7">{{ g }}</span>
+                    {% endfor %}
+                </summary>
+                <div class="mt-3">
+                    {% for trigger, event_strs in trigger_event_strs %}
+                    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.5rem; margin-bottom: 0.25rem;">
+                        <span class="tag is-light is-size-7">{{ (trigger.label.split(': ', 1)[1]) if ': ' in trigger.label else trigger.label }}</span>
+                        {% for e_str in event_strs %}
+                        <span class="tag is-light is-size-7">{{ e_str }}</span>
+                        {% endfor %}
+                        {% if trigger.addresses %}
+                        <div class="is-size-7 has-text-grey-light" style="flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 0.1rem 0.3rem; padding-left: 0.25rem;">
+                            {% for addr in trigger.addresses %}<span style="overflow-wrap: anywhere;">{{ addr }}</span>{% if not loop.last %}<span>·</span>{% endif %}{% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </details>
+            {% endfor %}
+            {% endif %}
+
+            {% if reactive_triggers %}
+            <p class="has-text-weight-semibold mb-2 ml-2">{{ _("Triggers") }}</p>
+            {% for trigger in reactive_triggers %}
+            <details class="box mb-3 event-filter-item" style="cursor: pointer;"
+                     data-events='{{ trigger.events | tojson }}'>
+                <summary class="has-text-weight-semibold" style="list-style: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="icon is-small has-text-grey">
+                        <i class="ti ti-chevron-right" style="transition: transform 0.15s;"></i>
+                    </span>
+                    {{ trigger.name }}
+                    <span class="tag is-light is-size-7 ml-2">{{ _(trigger.kind) }}</span>
+                </summary>
+                <div class="mt-3">
+                    {% if trigger.performers %}
+                    <p class="is-size-7 has-text-grey mb-1">{{ _("Triggered via") }}</p>
+                    <div class="tags mb-2">
+                        {% for p in trigger.performers %}
+                        <span class="tag is-light is-size-7">{{ p }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if trigger.event_displays %}
+                    <p class="is-size-7 has-text-grey mb-1">{{ _("Sends") }}</p>
+                    <div class="tags">
+                        {% for e in trigger.event_displays %}
+                        <span class="tag is-light is-size-7">{{ e }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if trigger.details %}
+                    <p class="is-size-7 has-text-grey mb-1 mt-2">{{ _("Details") }}</p>
+                    <div>
+                        {% for detail in trigger.details %}
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.15rem;">
+                            <span class="is-size-7 has-text-grey" style="min-width: 6rem;">{{ _(detail.label) }}</span>
+                            <span class="is-size-7">{{ detail.value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </details>
+            {% endfor %}
+            {% endif %}
+
+            {% endif %}
+
         </div>
-    {% endif %}
+        {% endif %}
 
     </div>
 </section>
+
+<script>
+var _selectedEventStr = null;
+
+function selectEventFilter(eventStr) {
+    if (_selectedEventStr === eventStr) {
+        _selectedEventStr = null;
+    } else {
+        _selectedEventStr = eventStr;
+    }
+
+    document.querySelectorAll('.event-filter-icon').forEach(function(el) {
+        if (_selectedEventStr === null || el.dataset.eventStr === _selectedEventStr) {
+            el.style.opacity = '';
+        } else {
+            el.style.opacity = '0.3';
+        }
+    });
+
+    document.querySelectorAll('.event-filter-item').forEach(function(el) {
+        if (_selectedEventStr === null) {
+            el.style.opacity = '';
+            return;
+        }
+        var events;
+        try { events = JSON.parse(el.dataset.events || '[]'); } catch(e) { events = []; }
+        el.style.opacity = events.includes(_selectedEventStr) ? '' : '0.3';
+    });
+}
+</script>
+
 </body>
 </html>

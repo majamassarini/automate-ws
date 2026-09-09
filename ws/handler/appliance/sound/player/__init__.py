@@ -7,10 +7,12 @@ class Handler(Parent):
     KLASS = home.appliance.sound.player.Appliance
     LABEL_FADE_IN = "Fade In"
     LABEL_FADE_OUT = "Fade Out"
-    ICON_FADE_IN = "fas fa-volume-up"
-    ICON_FADE_OUT = "fas fa-volume-off"
-    ICON_FORCED_ON = "fas fa-play-circle"
-    ICON_OFF = "far fa-play-circle"
+    ICON_FADE_IN = "ti ti-volume"
+    ICON_FADE_OUT = "ti ti-volume-off"
+    ICON_FORCED_ON = "ti ti-player-play-filled"
+    ICON_SLEEPY_FORCED_ON = "ti ti-moon"
+    LABEL_SLEEPY_FORCED_ON = "Sleepy Forced On"
+    ICON_OFF = "ti ti-player-stop-filled"
 
     def get_label(self, appliance):
         if (
@@ -38,6 +40,11 @@ class Handler(Parent):
             == home.appliance.sound.player.state.forced.circadian_rhythm.State.VALUE
         ):
             return self.LABEL_FORCED_CIRCADIAN_RHYTHM
+        elif (
+            appliance.state.VALUE
+            == home.appliance.sound.player.state.forced.sleepy_on.State.VALUE
+        ):
+            return self.LABEL_SLEEPY_FORCED_ON
 
     def get_icon(self, appliance):
         if (
@@ -65,6 +72,11 @@ class Handler(Parent):
             == home.appliance.sound.player.state.forced.circadian_rhythm.State.VALUE
         ):
             return self.ICON_FORCED_CIRCADIAN_RHYTHM
+        elif (
+            appliance.state.VALUE
+            == home.appliance.sound.player.state.forced.sleepy_on.State.VALUE
+        ):
+            return self.ICON_SLEEPY_FORCED_ON
 
     def is_displayed(self, appliance, event):
         result = False
@@ -81,6 +93,8 @@ class Handler(Parent):
         elif (
             appliance.state.VALUE
             == home.appliance.sound.player.state.forced.on.State.VALUE
+            or appliance.state.VALUE
+            == home.appliance.sound.player.state.forced.sleepy_on.State.VALUE
             or appliance.state.VALUE
             == home.appliance.sound.player.state.off.State.VALUE
         ) and (

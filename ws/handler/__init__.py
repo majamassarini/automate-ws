@@ -21,6 +21,13 @@ class Handler:
         self._home_resources = home_resources
         self._logger = logging.getLogger(__name__)
 
+    def localize_context(self, request, ctx: dict) -> dict:
+        """Merge i18n helpers into *ctx* and return it."""
+        from ws.i18n import i18n_context
+
+        ctx.update(i18n_context(request))
+        return ctx
+
     async def get_appliance(self, request):
         name = request.match_info.get("name")
         appliance = self._home_resources.appliances.find(name)  # noqa
@@ -155,7 +162,6 @@ from ws.handler import (
     websocket,
     history,
     details,
-    editor,
     login,
     logout,
 )

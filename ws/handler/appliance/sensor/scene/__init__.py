@@ -7,8 +7,8 @@ class Handler(Parent):
     KLASS = home.appliance.sensor.scene.Appliance
     LABEL_TRIGGERED = "Is running"
     LABEL_UNTRIGGERED = "Is stopped"
-    ICON_TRIGGERED = "fas fa-play"
-    ICON_UNTRIGGERED = "fas fa-stop"
+    ICON_TRIGGERED = "ti ti-player-play"
+    ICON_UNTRIGGERED = "ti ti-player-stop"
 
     def get_label(self, appliance):
         if (

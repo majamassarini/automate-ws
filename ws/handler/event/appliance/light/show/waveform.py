@@ -32,13 +32,13 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.waveform.Event.Sine:
-            return "fa-solid fa-stumbleupon"
+            return "ti ti-wave-sine"
         elif e == home.event.waveform.Event.HalfSine:
-            return "fa-brands fa-stumbleupon-circle"
+            return "ti ti-activity"
         elif e == home.event.waveform.Event.Pulse:
-            return "fa-solid fa-heart-pulse"
+            return "ti ti-wave-square"
         elif e == home.event.waveform.Event.Saw:
-            return "fa-solid fa-stairs"
+            return "ti ti-stairs"
         elif e == home.event.waveform.Event.Triangle:
-            return "fa-solid fa-wave-square"
+            return "ti ti-triangle"
         return e

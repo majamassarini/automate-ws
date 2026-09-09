@@ -20,9 +20,12 @@ def setup(app, resources, websocket_handler):
     apply_to_others_handler = handler.appliance.apply_to_others.Handler(
         resources
     )
+    send_modal_handler = handler.appliance.send_modal.Handler(resources)
+    send_to_selected_handler = handler.appliance.send_to_selected.Handler(
+        resources
+    )
     history_handler = handler.history.Handler(resources)
     details_handler = handler.details.Handler(resources)
-    editor_handler = handler.editor.Handler(resources)
     login_handler = handler.login.Handler(resources)
     logout_handler = handler.logout.Handler(resources)
     collection_regexp = r"/collection/{name}"
@@ -32,16 +35,17 @@ def setup(app, resources, websocket_handler):
     send_to_others_regexp = r"/appliance/{name}/send_to_others"
     apply_to_collection_regexp = r"/appliance/{name}/apply_to_collection"
     apply_to_others_regexp = r"/appliance/{name}/apply_to_others"
+    send_modal_regexp = r"/appliance/{name}/send_modal"
+    send_to_selected_regexp = r"/appliance/{name}/send_to_selected"
     history_regexp = r"/appliance/{name}/history"
     details_regexp = r"/appliance/{name}/details"
     app.router.add_routes(
         [
             web.get("/", index_handler.get),
             web.get("/index", index_handler.get),
+            web.get("/index/more", index_handler.get_more),
             web.get("/collections", collections_handler.get),
             web.get("/ws", websocket_handler.get),
-            web.get("/editor", editor_handler.get),
-            web.post("/editor", editor_handler.post),
             web.post("/login", login_handler.post),
             web.post("/logout", logout_handler.post),
             web.get(collection_regexp, collection_handler.get),
@@ -56,8 +60,9 @@ def setup(app, resources, websocket_handler):
                 apply_to_collection_regexp, apply_to_collection_handler.post
             ),
             web.post(apply_to_others_regexp, apply_to_others_handler.post),
+            web.get(send_modal_regexp, send_modal_handler.get),
+            web.post(send_to_selected_regexp, send_to_selected_handler.post),
             web.get(history_regexp, history_handler.get),
-            web.post(history_regexp, history_handler.post),
             web.get(details_regexp, details_handler.get),
         ]
     )
@@ -73,5 +78,7 @@ def setup(app, resources, websocket_handler):
         apply_to_collection_regexp, name="apply_to_collection"
     )
     app.router.add_resource(apply_to_others_regexp, name="apply_to_others")
+    app.router.add_resource(send_modal_regexp, name="send_modal")
+    app.router.add_resource(send_to_selected_regexp, name="send_to_selected")
     app.router.add_resource(history_regexp, name="history")
     app.router.add_resource(details_regexp, name="details")

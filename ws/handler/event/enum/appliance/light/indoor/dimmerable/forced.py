@@ -13,9 +13,9 @@ class Handler(forced.Handler):
     FORCED_CIRCADIAN_RHYTHM = "Forced circadian rhytm"
     FORCED_LUX_BALANCING = "Forced lux balancing"
     FORCED_SHOW = "Forced show"
-    ICON_CIRCADIAN_RHYTHM = "fas fa-sync"
-    ICON_LUX_BALANCING = "fas fa-adjust"
-    ICON_SHOW = "fas fa-magic"
+    ICON_CIRCADIAN_RHYTHM = "ti ti-rotate-clockwise"
+    ICON_LUX_BALANCING = "ti ti-brightness-auto"
+    ICON_SHOW = "ti ti-sparkles"
 
     def _get_str(self, e):
         if (
@@ -88,12 +88,12 @@ class Handler(forced.Handler):
             e
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.On
         ):
-            return self.ICON_UP
+            return "ti ti-bulb"
         elif (
             e
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.Off
         ):
-            return self.ICON_DOWN
+            return "ti ti-bulb-off"
         elif (
             e
             == home.appliance.light.indoor.dimmerable.event.forced.event.Event.CircadianRhythm

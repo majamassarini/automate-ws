@@ -1,4 +1,4 @@
-.PHONY: prepare-venv test coverage
+.PHONY: prepare-venv test coverage field-test field-test-docker
 
 VENV                    ?=
 PYTHON                   = $(if $(VENV),$(CURDIR)/$(VENV)/bin/python3,python3)
@@ -24,3 +24,9 @@ coverage: test
 	$(PYTHON) -m coverage report -m
 	$(PYTHON) -m coverage html
 	open htmlcov/index.html
+
+field-test:
+	$(PYTHON) field_test/server.py
+
+field-test-docker:
+	docker compose -f field_test/docker-compose.yml up --build

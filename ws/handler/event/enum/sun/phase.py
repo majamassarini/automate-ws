@@ -16,7 +16,7 @@ class Handler(twilight_civil.Handler):
 
     def get_icon(self, e):
         if e == home.event.sun.phase.Event.Sunrise:
-            return "fas fa-globe-europe"
+            return "ti ti-sunrise"
         elif e == home.event.sun.phase.Event.Sunset:
-            return "fas fa-globe"
+            return "ti ti-sunset"
         return e

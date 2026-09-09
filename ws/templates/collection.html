@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}" data-theme="auto">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/homino.css?v=13">
 
     <title>{{ collection }}</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/homino.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script type="text/javascript" src="/static/homino.js?v=2"></script>
 </head>
 
 <body>
@@ -19,44 +20,48 @@
 
         {% include "navbar.html" %}
 
-        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+        <nav class="breadcrumb mt-4" aria-label="breadcrumbs">
             <ul>
-                <li><a href="/collections">Collections</a></li>
+                <li><a href="/collections">{{ _("Collections") }}</a></li>
                 <li class="is-active"><a>{{ collection }}</a></li>
             </ul>
         </nav>
 
-        <h1 class="title">{{ collection }}</h1>
+        <h1 class="title is-5 mb-4">{{ collection }}</h1>
 
-        <div class="tile is-ancestor is-vertical mt-6">
-            {% for appliance, bean, event_beans in appliances %}
-                <div class="tile is-parent box">
-                    <div class="tile is-child is-4">
-                        <a class="is-size-5" href="{{ appliances_urls[appliance.name] }}">{{ appliance.name }}</a>
-                    </div>
-                    <div class="tile is-child is-2">
-                        <p class="title is-6" id="{{ bean.id }}">
-                            <label id="{{ bean.id_label }}">{{ bean.label }}</label>
-                            <span class="icon has-text-dark ml-2">
+        {% for appliance, bean, event_beans in appliances %}
+            <a class="box mb-3" href="{{ appliances_urls[appliance.name] }}">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem 0.75rem;">
+                    <span class="is-size-6 has-text-weight-medium">
+                        {{ appliance.name }}
+                        <span class="icon is-small has-text-grey-light ml-1" style="cursor: pointer; vertical-align: middle;"
+                              title="{{ _('Copy name') }}"
+                              onclick="event.preventDefault(); event.stopPropagation(); navigator.clipboard.writeText('{{ appliance.name }}')">
+                            <i class="ti ti-copy"></i>
+                        </span>
+                    </span>
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem;">
+                        <span class="tag is-info" id="{{ bean.id }}">
+                            <span class="icon mr-1">
                                 <i id="{{ bean.id_icon }}" class="{{ bean.icon }}"></i>
                             </span>
-                        </p>
-                    </div>
-                    <div class="tile is-child">
+                            <label id="{{ bean.id_label }}">{{ _(bean.label) }}</label>
+                        </span>
                         {% for bean in event_beans %}
-                            {%  if bean.enabled %}
-                                <span class="icon has-text-info">
+                            {% if bean.displayed %}
+                                {% if bean.icon is string and bean.icon %}
+                                <span class="icon {% if bean.enabled %}ws-enabled{% else %}ws-disabled{% endif %}">
                                     <i class="{{ bean.icon }}"></i>
                                 </span>
-                            {% else %}
-                                <span class="icon has-text-dark">
-                                    <i class="{{ bean.icon }}"></i>
-                                </span>
+                                {% elif bean.value is defined %}
+                                <span class="tag is-light is-small" id="{{ bean.id }}">{{ bean.value }}</span>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
+            </a>
+        {% endfor %}
 
     </div>
 </section>

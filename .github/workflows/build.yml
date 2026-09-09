@@ -10,7 +10,7 @@ on:
       automate_home_branch:
         description: "automate-home branch to install"
         required: false
-        default: "dev"
+        default: "main"
       automate_knx_branch:
         description: "automate-knx-plugin branch to install"
         required: false
@@ -25,7 +25,7 @@ on:
         default: "dev"
 
 env:
-  AUTOMATE_HOME_BRANCH: ${{ github.event.inputs.automate_home_branch || github.base_ref || github.ref_name || 'dev' }}
+  AUTOMATE_HOME_BRANCH: ${{ github.event.inputs.automate_home_branch || 'main' }}
   AUTOMATE_KNX_BRANCH: ${{ github.event.inputs.automate_knx_branch || github.base_ref || github.ref_name || 'dev' }}
   AUTOMATE_LIFX_BRANCH: ${{ github.event.inputs.automate_lifx_branch || github.base_ref || github.ref_name || 'dev' }}
   AUTOMATE_SONOS_BRANCH: ${{ github.event.inputs.automate_sonos_branch || github.base_ref || github.ref_name || 'dev' }}
@@ -84,3 +84,12 @@ jobs:
         run: |
           python -m coverage run -m unittest discover \
             -s ws/tests -p 'test*.py' -v
+
+      - name: Coverage report
+        run: python -m coverage report -m
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false

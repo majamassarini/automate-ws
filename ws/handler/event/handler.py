@@ -3,6 +3,7 @@ from typing import ClassVar, Optional
 import json
 
 from ws.handler.event.registry import Registry
+from ws.i18n import Translator
 
 
 class Bean:
@@ -47,9 +48,21 @@ class Handler(metaclass=Registry):
 
     def __init__(self, home_resources):
         self._home_resources = home_resources
+        self._translator = Translator()
+
+    @classmethod
+    def with_translator(cls, home_resources, translator):
+        h = cls(home_resources)
+        h._translator = translator
+        return h
 
     def get_module_str(self):
-        return self.KLASS.__module__
+        # Mirror the normalisation applied by
+        # home.event.enumeration.register_class so that bean.module matches
+        # the key used in home.event.registry.
+        return self.KLASS.__module__.replace(".definition", "").replace(
+            "forced.event", "forced"
+        )
 
     def get_class_str(self):
         return self.KLASS.__name__
@@ -92,10 +105,10 @@ class Handler(metaclass=Registry):
         return "{} {}".format(self.LABEL, event)
 
     def get_description_for_index(self, event):
-        return self.get_description(event)
+        return self._translator(self.get_description(event))
 
     def get_description_for_history(self, event):
-        return self.get_description(event)
+        return self._translator(self.get_description(event))
 
     def get_icon(self, event):
-        return "fas fa-times-circle"
+        return "ti ti-circle-x"

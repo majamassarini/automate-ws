@@ -20,9 +20,9 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.sun.brightness.Event.Bright:
-            return "fas fa-sun"
+            return "ti ti-sun-high"
         elif e == home.event.sun.brightness.Event.Dark:
-            return "fas fa-cloud-sun"
+            return "ti ti-cloud"
         elif e == home.event.sun.brightness.Event.DeepDark:
-            return "fas fa-cloud"
+            return "ti ti-cloud"
         return e

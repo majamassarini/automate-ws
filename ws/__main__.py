@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+import json
 import logging.config
 import os
 import sys
 import time
+from urllib.parse import quote
 
 from aiohttp import web
 from aiohttp_session import setup as setup_session, get_session
@@ -40,8 +42,49 @@ class Resources(home.builder.listener.Resources):
         self.websockets = []
 
 
+def make_loki_url(base_url, name_filter=None, datasource_uid=None):
+    if not base_url:
+        return ""
+    datasource = datasource_uid or "loki"
+    query = {
+        "refId": "A",
+        "expr": '{job=~".+"}',
+        "queryType": "range",
+        "datasource": (
+            {"type": "loki", "uid": datasource} if datasource_uid else "loki"
+        ),
+        "direction": "backward",
+    }
+    panes = json.dumps(
+        {
+            "a": {
+                "datasource": datasource,
+                "queries": [query],
+                "range": {"from": "now-1h", "to": "now"},
+            }
+        },
+        separators=(",", ":"),
+    )
+    return f"{base_url.rstrip('/')}/explore?schemaVersion=1&panes={quote(panes)}&orgId=1"
+
+
 if __name__ == "__main__":
-    (options, _) = home.options.parser().parse_args()
+    parser = home.options.parser()
+    parser.add_option(
+        "--webserver-loki-base-url",
+        dest="webserver_loki_base_url",
+        default=None,
+        metavar="LOKI BASE URL",
+        help="Grafana base URL (e.g. http://host:3000) for the Logs navbar link",
+    )
+    parser.add_option(
+        "--webserver-loki-datasource-uid",
+        dest="webserver_loki_datasource_uid",
+        default=None,
+        metavar="LOKI DATASOURCE UID",
+        help="Grafana Loki datasource UID (find it in Grafana → Connections → Data sources → Loki)",
+    )
+    (options, _) = parser.parse_args()
     if options.configuration_file:
         options = home.configs.parse(vars(options), options.configuration_file)
 
@@ -79,7 +122,18 @@ if __name__ == "__main__":
 
         # security setup
         policy = SessionIdentityPolicy()
-        brain_policy = ws.authorization.Policy()
+        admin_password = os.environ.get("WS_ADMIN_PASSWORD")
+        user_password = os.environ.get("WS_USER_PASSWORD")
+        credentials = (
+            {
+                "admin": admin_password,
+                "user": user_password or admin_password,
+                "anonymous": "",
+            }
+            if admin_password
+            else None
+        )
+        brain_policy = ws.authorization.Policy(credentials=credentials)
         setup_security(app, policy, brain_policy)
         app["credentials"] = brain_policy.credentials
 
@@ -118,16 +172,17 @@ if __name__ == "__main__":
                 )
             ]
         )
-        app.add_routes(
-            [web.static("/logs", options.logging_dir, show_index=True)]
-        )
-
         aiohttp_jinja2.setup(
             app,
             loader=jinja2.FileSystemLoader(
                 os.path.join(options.webserver_dir, "templates")
             ),
         )
+        loki_base = options.webserver_loki_base_url or ""
+        loki_uid = options.webserver_loki_datasource_uid or ""
+        aiohttp_jinja2.get_env(app).globals["loki_base_url"] = loki_base
+        aiohttp_jinja2.get_env(app).globals["loki_datasource_uid"] = loki_uid
+        aiohttp_jinja2.get_env(app).globals["make_loki_url"] = make_loki_url
 
         return app
 

@@ -7,10 +7,10 @@ class Handler(Parent):
     KLASS = home.appliance.sprinkler.Appliance
     LABEL_PARTIALLY_ON = "Partially On"
     LABEL_FORCED_PARTIALLY_ON = "Forced Partially On"
-    ICON_ON = "fas fa-water"
-    ICON_OFF = "fas fa-faucet"
-    ICON_PARTIALLY_ON = "fas fa-hand-holding-water"
-    ICON_FORCED_PARTIALLY_ON = "far fa-hand-point-right"
+    ICON_ON = "ti ti-droplets"
+    ICON_OFF = "ti ti-droplet-off"
+    ICON_PARTIALLY_ON = "ti ti-droplet-half"
+    ICON_FORCED_PARTIALLY_ON = "ti ti-hand-finger"
 
     def get_label(self, appliance):
         if (

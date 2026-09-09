@@ -18,7 +18,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.sun.hit.Event.Sunhit:
-            return "fas fa-square"
+            return "ti ti-sun"
         elif e == home.event.sun.hit.Event.Sunleft:
-            return "far fa-square"
+            return "ti ti-sun-off"
         return e

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}" data-theme="auto">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/static/icon_128x128_blu.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/homino.css?v=13">
 
     <title>{{ appliance.name }} history</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/dcf90dd78d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/homino.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script type="text/javascript" src="/static/homino.js?v=2"></script>
 </head>
 
 <body>
@@ -19,64 +20,56 @@
 
         {% include "navbar.html" %}
 
-        <nav class="breadcrumb mt-6" aria-label="breadcrumbs">
+        <nav class="breadcrumb mt-4" aria-label="breadcrumbs">
             <ul>
                 <li><a href="/collections">Collections</a></li>
                 <li><a href="{{ collection_url }}">{{ collection }}</a></li>
                 <li><a href="{{ appliance_uri }}">{{ appliance.name }}</a></li>
-                <li class="is-active"><a>history</a></li>
+                <li class="is-active"><a>{{ _("history") }}</a></li>
             </ul>
         </nav>
 
-        <h1 class="title">{{ appliance.name }}</h1>
+        <h1 class="title is-5 mb-4">{{ appliance.name }}</h1>
 
-        <div class="tile is-ancestor is-vertical mt-6">
-            <form class="tile is-parent box" action="{{ history_url }}" method="POST" id="form-update-history">
-                <div class="tile is-child is-small">
-                    <label class="has-text-info is-small">Number of events: </label>
-                </div>
-                <div class="tile is-child is-small">
-                    <input class="input is-info is-small" type="number" name="num-of-events" id="num-of-events" value="10"/>
-                </div>
-                <div class="tile is-child is-small">
-                    <input class="button is-info is-small" type="submit" value="update">
-                </div>
-            </form>
-
-
-            {% for (timestamp, old_appliance, old_appliance_bean, event_details) in history %}
-                <div class="tile is-parent box">
-                    <div class="tile is-child">
-                        <p>{{ timestamp }}</p>
-                    </div>
-                    <div class="tile is-child">
-                        <b>
-                            <span class="icon has-text-dark mr-2">
-                                <i id="{{ old_appliance_bean.id_icon }}" class="{{ old_appliance_bean.icon }}"></i>
-                            </span>
-                            <label id="{{ old_appliance_bean.id_label }}">{{ old_appliance_bean.label }}</label>
-                        </b>
-                    </div>
-                    <div class="tile is-child">
-                        <ul class="events">
-                            {% for event, icon in event_details %}
-                                {% if event or icon %}
-                                <li>
-                                    <span class="icon has-text-info">
-                                    <i class="{{ icon }}"></i>
-                                </span>
-                                <span>{{ event }}</span>
-                                </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+        <div class="is-flex is-flex-wrap-wrap is-align-items-center mb-3" style="gap: 0.5rem;">
+            {% for key, label in [("today", _("Today")), ("yesterday", _("Yesterday"))] %}
+            <button class="button is-small {% if active_filter == key %}is-primary{% else %}is-light{% endif %}"
+                    hx-get="{{ history_url }}?filter={{ key }}&offset=0&limit={{ limit }}"
+                    hx-target="#history-results"
+                    hx-swap="innerHTML">
+                {{ label }}
+            </button>
             {% endfor %}
-
+            <!-- Custom date range -->
+            <form style="display: inline-flex; align-items: center; gap: 0.35rem;"
+                  hx-get="{{ history_url }}"
+                  hx-target="#history-results"
+                  hx-swap="innerHTML"
+                  hx-include="[name='from_date'],[name='to_date']">
+                <input type="hidden" name="filter" value="custom">
+                <input type="hidden" name="offset" value="0">
+                <input type="hidden" name="limit" value="{{ limit }}">
+                <input class="input is-small {% if active_filter == 'custom' %}is-primary{% endif %}"
+                       type="date" name="from_date"
+                       value="{{ custom_from }}"
+                       style="width: 9rem;">
+                <span class="is-size-7 has-text-grey">–</span>
+                <input class="input is-small {% if active_filter == 'custom' %}is-primary{% endif %}"
+                       type="date" name="to_date"
+                       value="{{ custom_to }}"
+                       style="width: 9rem;">
+                <button type="submit"
+                        class="button is-small {% if active_filter == 'custom' %}is-primary{% else %}is-light{% endif %}">
+                    <span class="icon is-small"><i class="ti ti-filter"></i></span>
+                </button>
+            </form>
         </div>
+        <div id="history-results">
+            {% include "history_partial.html" %}
+        </div>
+
     </div>
 </section>
+
 </body>
 </html>
-

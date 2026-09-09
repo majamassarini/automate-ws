@@ -9,10 +9,10 @@ class Handler(Parent):
     LABEL_FORCED_OPENED = "Forced Opened"
     LABEL_FORCED_CLOSED = "Forced Closed"
     LABEL_CLOSED = "Closed"
-    ICON_OPENED = "fas fa-door-open"
-    ICON_CLOSED = "fas fa-door-closed"
-    ICON_FORCED_OPENED = "far fa-hand-point-up"
-    ICON_FORCED_CLOSED = "far fa-hand-point-down"
+    ICON_OPENED = "ti ti-fence"
+    ICON_CLOSED = "ti ti-fence-off"
+    ICON_FORCED_OPENED = "ti ti-arrow-big-up"
+    ICON_FORCED_CLOSED = "ti ti-arrow-big-down"
 
     def get_label(self, appliance):
         if (

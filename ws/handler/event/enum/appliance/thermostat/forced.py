@@ -9,7 +9,7 @@ class Handler(forced.Handler):
     TEMPLATE = "event/forced_enum.html"
     KEEPING = "keeping"
     FORCED_KEEPING = "Forced keeping"
-    ICON_KEEPING = "fas fa-sort"
+    ICON_KEEPING = "ti ti-temperature"
 
     def _get_str(self, e):
         if e == home.appliance.thermostat.presence.event.forced.event.Event.On:
@@ -53,12 +53,12 @@ class Handler(forced.Handler):
 
     def get_icon(self, e):
         if e == home.appliance.thermostat.presence.event.forced.event.Event.On:
-            return self.ICON_UP
+            return "ti ti-flame"
         elif (
             e
             == home.appliance.thermostat.presence.event.forced.event.Event.Off
         ):
-            return self.ICON_DOWN
+            return "ti ti-snowflake"
         elif (
             e
             == home.appliance.thermostat.presence.event.forced.event.Event.Keep

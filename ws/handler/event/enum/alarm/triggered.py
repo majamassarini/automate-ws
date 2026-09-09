@@ -26,7 +26,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.alarm.triggered.Event.On:
-            return "fas fa-eye"
+            return "ti ti-alert-triangle"
         elif e == home.event.alarm.triggered.Event.Off:
-            return "far fa-eye"
+            return "ti ti-shield-check"
         return e

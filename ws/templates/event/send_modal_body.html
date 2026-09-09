@@ -1,0 +1,51 @@
+<section class="modal-card-body">
+    <form hx-post="{{ send_to_selected_url }}"
+          hx-target="#appliance-section-{{ id }}"
+          hx-swap="outerHTML">
+        <input type="hidden" name="module" value="{{ module }}">
+        <input type="hidden" name="klass" value="{{ klass }}">
+
+        <div class="mb-4">
+            <p class="has-text-weight-semibold mb-2">{{ _("What to send for") }} <em>{{ bean.label }}</em>:</p>
+            <div>
+                <label class="radio">
+                    <input type="radio" name="send_type" value="send_enabled" checked>
+                    {{ _("Enable/disable status (currently:") }} <strong>{% if bean.enabled %}{{ _("enabled") }}{% else %}{{ _("disabled") }}{% endif %}</strong>)
+                </label>
+            </div>
+            <div class="mt-2">
+                <label class="radio">
+                    <input type="radio" name="send_type" value="send_value">
+                    {{ _("Event value (currently:") }} <strong>{{ bean.value }}</strong>)
+                </label>
+            </div>
+        </div>
+
+        {% if similar %}
+        <div class="mb-3">
+            <div class="is-flex is-align-items-center mb-2">
+                <p class="has-text-weight-semibold mr-3">{{ _("Appliances to send to:") }}</p>
+                <a class="mr-1" style="cursor: pointer;"
+                   onclick="document.querySelectorAll('#modal-send-{{ bean.id }} input[name=appliance_name]').forEach(cb => cb.checked = true)">{{ _("All") }}</a>
+                /
+                <a class="ml-1" style="cursor: pointer;"
+                   onclick="document.querySelectorAll('#modal-send-{{ bean.id }} input[name=appliance_name]').forEach(cb => cb.checked = false)">{{ _("None") }}</a>
+            </div>
+            {% for other in similar %}
+            <div>
+                <label class="checkbox">
+                    <input type="checkbox" name="appliance_name" value="{{ other.name }}" checked>
+                    {{ other.name }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="has-text-grey mb-3">{{ _("No other similar appliances found.") }}</p>
+        {% endif %}
+
+        <div class="mt-4">
+            <button type="submit" class="button is-info">{{ _("Send") }}</button>
+        </div>
+    </form>
+</section>

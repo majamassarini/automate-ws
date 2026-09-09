@@ -18,7 +18,7 @@ class Handler(Parent):
 
     def get_icon(self, e):
         if e == home.event.scene.Event.Triggered:
-            return "fas fa-play"
+            return "ti ti-player-play"
         elif e == home.event.scene.Event.Untriggered:
-            return "fas fa-stop"
+            return "ti ti-player-stop"
         return e

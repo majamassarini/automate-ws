@@ -19,8 +19,11 @@ class Handler(Parent):
             collections.append((collection, appliance_beans))
 
         user = await self.get_user(request)
-        return {
-            "user": user,
-            "collections": collections,
-            "collections_urls": collections_urls,
-        }
+        return self.localize_context(
+            request,
+            {
+                "user": user,
+                "collections": collections,
+                "collections_urls": collections_urls,
+            },
+        )
