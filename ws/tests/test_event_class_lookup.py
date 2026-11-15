@@ -91,6 +91,15 @@ class TestEventClassLookup(unittest.TestCase):
 
         self.assertIs(cls, m.Event)
 
+    def test_sound_player_volume_scales(self):
+        import home.appliance.sound.player.event.volume_scale as sleepy
+        import home.appliance.sound.player.event.fade_in.volume_scale as fade_in
+        import home.appliance.sound.player.event.fade_out.volume_scale as fade_out
+
+        for module in (sleepy, fade_in, fade_out):
+            cls = _event_class(module.__name__, "Event")
+            self.assertIs(cls, module.Event)
+
     # --- Security: non-home modules are rejected ---
 
     def test_rejects_os_module(self):

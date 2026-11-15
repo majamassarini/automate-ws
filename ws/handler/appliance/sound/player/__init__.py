@@ -80,7 +80,13 @@ class Handler(Parent):
 
     def is_displayed(self, appliance, event):
         result = False
-        if isinstance(
+        if (
+            appliance.state.VALUE
+            == home.appliance.sound.player.state.forced.sleepy_on.State.VALUE
+            and type(event) is home.appliance.sound.player.event.volume_scale.Event
+        ):
+            result = True
+        elif isinstance(
             event,
             (
                 home.appliance.sound.player.event.sleepy_volume.Event,
@@ -154,6 +160,7 @@ class Handler(Parent):
                     event,
                     (
                         home.appliance.sound.player.event.fade_in.volume.Event,
+                        home.appliance.sound.player.event.fade_in.volume_scale.Event,
                         home.appliance.sound.player.event.fade_in.playlist.Event,
                         home.event.elapsed.Event,
                     ),
@@ -173,12 +180,13 @@ class Handler(Parent):
             result = True
         elif (
             appliance.state.VALUE
-            == home.appliance.sound.player.state.fade_in.State.VALUE
+            == home.appliance.sound.player.state.fade_out.State.VALUE
             and (
                 isinstance(
                     event,
                     (
                         home.appliance.sound.player.event.fade_out.volume.Event,
+                        home.appliance.sound.player.event.fade_out.volume_scale.Event,
                         home.appliance.sound.player.event.fade_out.playlist.Event,
                         home.event.elapsed.Event,
                     ),
