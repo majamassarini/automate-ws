@@ -52,7 +52,7 @@
                             <form class="tile is-parent box"
                                   id="form-{{ loop.index }}"
                                   hx-post="{{ appliance_url }}"
-                                  hx-trigger="change from:input, change from:select"
+                                  hx-trigger="change"
                                   hx-target="#appliance-section-{{ id }}"
                                   hx-swap="outerHTML">
                             <input type="hidden" name="module" value="{{ bean.module }}">
