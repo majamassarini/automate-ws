@@ -46,9 +46,7 @@ class AppliancePostTestCase(AuthenticatedTestCase):
     async def test_each_event_form_posts_only_its_own_changes(self):
         # "change from:input" would make every form of the page post when
         # any input changes, each with the value it displays
-        request = await self.client.request(
-            "GET", "/appliance/simple%20light"
-        )
+        request = await self.client.request("GET", "/appliance/simple%20light")
         text = await request.text()
         assert 'hx-trigger="change"' in text
         assert "from:input" not in text
