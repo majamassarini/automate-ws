@@ -83,7 +83,8 @@ class Handler(Parent):
         if (
             appliance.state.VALUE
             == home.appliance.sound.player.state.forced.sleepy_on.State.VALUE
-            and type(event) is home.appliance.sound.player.event.volume_scale.Event
+            and type(event)
+            is home.appliance.sound.player.event.volume_scale.Event
         ):
             result = True
         elif isinstance(

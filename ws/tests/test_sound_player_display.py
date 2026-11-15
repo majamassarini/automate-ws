@@ -58,7 +58,9 @@ class TestSoundPlayerVolumeScaleDisplay(unittest.TestCase):
     def test_fade_out_shows_its_volume_and_playlist(self):
         appliance = _appliance(state.fade_out.State.VALUE)
         self.assertTrue(
-            self.handler.is_displayed(appliance, event.fade_out.volume.Event(20))
+            self.handler.is_displayed(
+                appliance, event.fade_out.volume.Event(20)
+            )
         )
         self.assertTrue(
             self.handler.is_displayed(
@@ -66,7 +68,9 @@ class TestSoundPlayerVolumeScaleDisplay(unittest.TestCase):
             )
         )
         self.assertFalse(
-            self.handler.is_displayed(appliance, event.fade_in.volume.Event(30))
+            self.handler.is_displayed(
+                appliance, event.fade_in.volume.Event(30)
+            )
         )
 
 
