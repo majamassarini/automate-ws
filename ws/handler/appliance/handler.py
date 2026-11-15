@@ -131,7 +131,11 @@ class Handler(Parent):
         klass = data["klass"]
         k = _event_class(module, klass)
         handler = self.get_event_handler(appliance, k, False)
-        event = handler(self._home_resources).post(data)
+        try:
+            event = handler(self._home_resources).post(data)
+        except KeyError as e:
+            # e.g. a disabled <select> is not submitted with its form
+            raise web.HTTPBadRequest(reason=f"Missing field: {e}")
         _, new_state = appliance.notify(event)
         await self._home_resources.redis_gateway.save(appliance)
         await self._home_resources.redis_gateway.notify(appliance)
